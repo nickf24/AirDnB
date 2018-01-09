@@ -25,14 +25,4 @@ class App extends React.Component {
   }
 }
 
-<img src="http://sparetimelabs.com/animato/animato/panorama/pan.jpg"/>
-
-
-
-
-
-
-
-
-
 ReactDOM.render(<App />, document.getElementById('app'));
