@@ -1,13 +1,13 @@
 # Project Name
 
-> Pithy project description
+> An AirBnb Clone Completed in 1 Week
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Evan Atkinson
+  - Nick Forster
+  - Andrew Kang
+  - Derrick Zhang
 
 ## Table of Contents
 
