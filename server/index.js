@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 
 // this is quite a small change
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3002;
 app.listen(port, () => {
-  console.log('FlyingMongeese listening on PORT 3000!');
+  console.log('FlyingMongeese listening on PORT 3002!');
 });
