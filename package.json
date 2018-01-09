@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server/index.js",
     "react-dev": "webpack -d --watch",
-    "build": "webpack --config ./config/webpack.config.js --progress --colors",
+    "build": "webpack --config ./webpack.config.js --progress --colors",
     "postinstall": "npm run build"
 
   },
