@@ -1,13 +1,13 @@
 # Project Name
 
-> Pithy project description
+> An AirBnb Clone Completed in 1 Week
 
 ## Team
 
-  - teamMember
-  - teamMember
-  - teamMember
-  - teamMember
+  - Evan Atkinson
+  - Nick Forster
+  - Andrew Kang
+  - Derrick Zhang
 
 ## Table of Contents
 
@@ -28,7 +28,7 @@
 - Node 6.4.x
 - Redis 2.6.x
 - Postgresql 9.1.x
-- etc
+- MongoDB
 - etc
 
 ## Development
