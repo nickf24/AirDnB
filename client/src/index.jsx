@@ -53,6 +53,7 @@ class App extends React.Component {
           <Login  handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
           {this.switchViews()}
         </div>
+
           )
   }
 }
