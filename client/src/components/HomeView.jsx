@@ -4,10 +4,29 @@ import HouseListing from './HouseListing.jsx';
 import Search from './Search.jsx';
 import SearchView from './SearchView.jsx';
 
+const axios = require('axios');
+
 class HomeView extends React.Component {
   	
   constructor(props) {
   	super(props);
+    this.state = {
+      listings: []
+    }
+  }
+
+  componentDidMount() {
+    var instance = this;
+
+    axios.get('/listings').then(function(response) {
+      console.log('RESPONSE FROM GET IS', response);
+      instance.setState({
+        listings: response.data
+      })
+    }).catch(function(error) {
+      console.log(error)
+    })
+
   }
 
   render() {
@@ -16,7 +35,7 @@ class HomeView extends React.Component {
         <div>
               <div className="row">
                 <div className="col-lg-12 jumbotron cleanBorder center-text"> 
-                  <img src="https://files.slack.com/files-pri/T7ZKUC7EW-F8R07J085/airdnb.png" width={360} height={90} mode='fit' id="shiftLeft"/>
+                  <img src="http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c513.png" width={360} height={90} mode='fit' id="shiftLeft"/>
                   <br />
                   <br />
                   <h2 className="display-4"> Book unique homes and</h2> 
@@ -32,7 +51,7 @@ class HomeView extends React.Component {
           <div className = 'row'>
             <div className="col-md-12 cleanBorder"> 
             <div className = 'row'>
-  	          {data2.map((house) => <HouseListing house = {house}/>)}
+  	          {this.state.listings.map((house) => <HouseListing key = {JSON.stringify(house)} house = {house}/>)}
               </div>
             </div> 
           
@@ -41,13 +60,8 @@ class HomeView extends React.Component {
       </div>
   	)
 
-
   }
 
-
 }
-
-
-
 
 export default HomeView;

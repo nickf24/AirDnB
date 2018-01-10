@@ -9,7 +9,7 @@ class HouseListing extends React.Component {
 
 
   render() {
-  	console.log(this.props.house)
+  	// console.log(this.props.house)
   	return (
   		<div className = 'col-md-4'> 
         <img src = {this.props.house.images[0]} className = "rounded"/>

@@ -18,8 +18,9 @@ class App extends React.Component {
   }
 
 
-  handleSearchSubmit() {
+  handleSearchSubmit(searchVal) {
     // nick's test
+    console.log('the searched value is', searchVal)
     this.setState({
       currentView: 'searchView'
     })
