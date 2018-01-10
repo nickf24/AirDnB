@@ -122,9 +122,6 @@ var sampleData = {
  };
 
 
-
-
-
 export default Listing; 
 
 

@@ -11,25 +11,29 @@ let userSchema = mongoose.Schema({
   id: Number,
   userName: String,
   password: String,
-
   listings: [{
+    price: 133,
     listing_id: Number
     reserved_dates: Array, //tuple of dates i.e [[1/9/18, 1/12/18], ...]
     imageURL: Array,
-    Address: String,
+    summary: String,
+    street: String,
+    city: String,
+    state: String,
     rating: Number, 
     private: Boolean, //private home or not
     typeHome: String, //apartment, home, tent, RV
     bedrooms: Number,
     bathrooms: Number,
     guests: Number,
+    description: String,
     amenities: [{body: String}, //might not be necessary. 
           {wifi: Boolean},
           {kitchen: Boolean},
           {parking: Boolean},
           {pool: Boolean}
-          ],
-    house_rules: String,
+          {gym: Boolean}],
+    house_rules: Array,
     cancellations: String,
     lat: Number,
     lon: Number,
