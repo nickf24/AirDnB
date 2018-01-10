@@ -1,11 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
+import SearchView from './components/SearchView.jsx';
 
 class App extends React.Component {
 
   constructor(props) {
   	super(props);
+  }
+
+
+  handleSearchSubmit() {
+    // nick's test
   }
 
   render () {
@@ -20,6 +26,7 @@ class App extends React.Component {
                   <br />
                   <Search />
                 </div>
+                <SearchView />
               </div>
           )
   }
