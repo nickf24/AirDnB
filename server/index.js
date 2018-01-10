@@ -7,9 +7,24 @@ const parser = require('body-parser');
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  // For Evan's homepage
 });
 
+app.post('/', (req, res) => {
+  // default post
+});
+
+app.post('/', (req, res) => {
+  // default post
+});
+
+app.post('/', (req, res) => {
+  // default post
+});
+
+app.post('/', (req, res) => {
+  // default post
+});
 
 // this is quite a small change
 var port = process.env.PORT || 3002;
