@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
 import SearchView from './components/SearchView.jsx';
 import Login from './components/Login.jsx';
+import Listing from './components/Listing.jsx';
 
 class App extends React.Component {
 
@@ -13,16 +14,19 @@ class App extends React.Component {
 
   handleSearchSubmit() {
     // nick's test
-    
+  }
+  
   handleLoginSubmit() {
     // Test
   }
 
   render () {
     return (
+            <div>
               <div className="row">
-                <div className="col-lg-12 jumbotron center-text"> 
-                  <img src="http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c513.png" width={400} height={125} mode='fit'/>
+                <div className="col-lg-12 jumbotron cleanBorder center-text"> 
+                  <img src="https://files.slack.com/files-pri/T7ZKUC7EW-F8R07J085/airdnb.png" width={360} height={90} mode='fit' id="shiftLeft"/>
+                  <br />
                   <br />
                   <h2 className="display-4"> Book unique homes and</h2> 
                   <h2 className="display-4"> experiences all over the world. </h2>
@@ -33,6 +37,14 @@ class App extends React.Component {
                 <SearchView />
                 <Login />
               </div>
+
+              <div className="container-fluid">
+                <div className="row">
+                  <Listing />
+                </div>
+              </div>
+            </div>
+
           )
   }
 }
