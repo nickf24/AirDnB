@@ -1,12 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
-<<<<<<< HEAD
 import SearchView from './components/SearchView.jsx';
 import Login from './components/Login.jsx';
-=======
 import Listing from './components/Listing.jsx';
->>>>>>> made smaller adjustments with css and main index.jsx files as well
 
 class App extends React.Component {
 
@@ -17,7 +14,8 @@ class App extends React.Component {
 
   handleSearchSubmit() {
     // nick's test
-    
+  }
+  
   handleLoginSubmit() {
     // Test
   }
