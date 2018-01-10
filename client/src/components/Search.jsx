@@ -10,16 +10,25 @@ class Search extends React.Component {
   };
 
   locationChange(event) {
-    this.setState({
-      location: event.target.value
+    this.setState( (prevState) => {
+      return {
+        location: event.target.value 
+      }
+      
     });
   }
 
   clickAdd(){
   	console.log(this.state.location);
+    this.setState((prevState) => {
+      return {
+        location: prevState.location
+      }
+    })
    }
    
   render() {
+
 	  return (
 	  <div className="col-md-12">
 	    <div className="input-group">
@@ -28,6 +37,7 @@ class Search extends React.Component {
 	      <button className="btn btn-danger" type="button" onClick={this.clickAdd.bind(this)}>SEARCH</button>
 	    </span>
 	    </div>
+    
 	  </div> 
 	  )
   }
