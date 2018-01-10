@@ -11,7 +11,7 @@ import HomeView from './components/HomeView.jsx';
 class App extends React.Component {
 
   constructor(props) {
-  	super(props);
+    super(props);
     this.state = {
       currentView: 'homeView'// evan's 
     }
@@ -48,6 +48,7 @@ class App extends React.Component {
   render () {
 
     return (
+
         <div>
           <Login  handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
           {this.switchViews()}
