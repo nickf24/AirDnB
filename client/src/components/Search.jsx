@@ -34,7 +34,7 @@ class Search extends React.Component {
 	    <div className="input-group">
 	    <input className="form-control shadowButton" type="text" value={this.state.city} onChange={this.locationChange.bind(this)} placeholder="TRY 'SAN FRANCISCO'"/>
 	    <span className="input-group-btn">
-	      <button className="btn btn-danger btn-lg shadowButton" type="button" onClick={this.clickAdd.bind(this)}>SEARCH</button>
+	      <button className="btn btn-danger btn-lg shadowButton" type="button" onClick={() => this.props.clickFn()}>SEARCH</button>
 	    </span>
 	    </div>
     
