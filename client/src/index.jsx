@@ -18,9 +18,8 @@ class App extends React.Component {
   }
 
 
-  handleSearchSubmit(searchVal) {
+  handleSearchSubmit() {
     // nick's test
-    console.log('the searched value is', searchVal)
     this.setState({
       currentView: 'searchView'
     })
@@ -48,10 +47,12 @@ class App extends React.Component {
   render () {
 
     return (
+
         <div>
           <Login  handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
           {this.switchViews()}
         </div>
+
           )
   }
 }
