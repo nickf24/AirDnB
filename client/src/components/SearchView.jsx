@@ -9,16 +9,20 @@ class SearchView extends React.Component {
   }
 
   render() {
-    // var house1 = data2[0].listings[0];
-    // console.log(house1);
   	return (
-
-
-  	  <div> 
-
-  	    {data2.map((house) => <HouseListing house = {house}/>)}
-  	  
-  	  </div>
+ 
+        <div className = 'container-fluid'> 
+          <div className = 'row'>
+            <div className="col-md-8 cleanBorder"> 
+            <div className = 'row'>
+  	          {data2.map((house) => <HouseListing house = {house}/>)}
+              </div>
+            </div> 
+            <div className="col-md-4">
+              <img src = 'https://media.wired.com/photos/59333e64714b881cb296a4d4/master/w_933,c_limit/Google-Maps-shot-of-San-Francisco.png'/>
+            </div>
+          </div>
+  	    </div> 
 
   	)
 

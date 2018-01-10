@@ -1,21 +1,18 @@
 import React from 'react';
-import SearchView from './SearchView.jsx';
 
 class Search extends React.Component {
 
   constructor (props) {
     super(props);
     this.state = {
-      location: '',
-      searched: false
+      location: ''
     };
   };
 
   locationChange(event) {
     this.setState( (prevState) => {
       return {
-        location: event.target.value,
-        searched: prevState.searched  
+        location: event.target.value 
       }
       
     });
@@ -25,18 +22,12 @@ class Search extends React.Component {
   	console.log(this.state.location);
     this.setState((prevState) => {
       return {
-        location: prevState.location,
-        searched: true
+        location: prevState.location
       }
     })
    }
    
   render() {
-    var searchView = null;
-    if (this.state.searched) {
-      searchView = <SearchView />
-    }
-
 
 	  return (
 	  <div className="col-md-12">
@@ -46,7 +37,7 @@ class Search extends React.Component {
 	      <button className="btn btn-danger" type="button" onClick={this.clickAdd.bind(this)}>SEARCH</button>
 	    </span>
 	    </div>
-      <SearchView />
+    
 	  </div> 
 	  )
   }
