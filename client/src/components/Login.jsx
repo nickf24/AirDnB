@@ -15,7 +15,17 @@ class Login extends React.Component {
   }
 
   handleLogin() {
-    console.log('click!');
+    var info = {
+      username: this.state.username,
+      password: this.state.password
+    }
+
+    this.props.handleLoginSubmit(info);
+
+    this.setState({
+      username: '',
+      password: ''
+    });
   }
 
   render() {

@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 import Search from './components/Search.jsx';
 import SearchView from './components/SearchView.jsx';
 import Login from './components/Login.jsx';
 import Listing from './components/Listing.jsx';
 import HomeView from './components/HomeView.jsx';
+
 
 class App extends React.Component {
 
@@ -23,8 +25,14 @@ class App extends React.Component {
     })
   }
   
-  handleLoginSubmit() {
-    // Test
+  handleLoginSubmit(login) {
+    axios.post('/login', login)
+      .then(response => {
+        console.log(response); 
+      })
+      .catch(error => {
+        console.error(error); 
+      });
   }
 
   switchViews() {
@@ -41,7 +49,8 @@ class App extends React.Component {
     return (
 
         <div>
-            {this.switchViews()}
+          <Login  handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
+          {this.switchViews()}
         </div>
 
           )
