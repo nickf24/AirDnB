@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from './components/Search.jsx';
 import SearchView from './components/SearchView.jsx';
+import Login from './components/Login.jsx';
 
 class App extends React.Component {
 
@@ -12,6 +13,9 @@ class App extends React.Component {
 
   handleSearchSubmit() {
     // nick's test
+    
+  handleLoginSubmit() {
+    // Test
   }
 
   render () {
@@ -27,6 +31,7 @@ class App extends React.Component {
                   <Search />
                 </div>
                 <SearchView />
+                <Login />
               </div>
           )
   }
