@@ -6,6 +6,7 @@ import SearchView from './components/SearchView.jsx';
 import Login from './components/Login.jsx';
 import Listing from './components/Listing.jsx';
 import HomeView from './components/HomeView.jsx';
+import NavBar from './components/NavBar.jsx';
 
 
 class App extends React.Component {
@@ -59,17 +60,22 @@ class App extends React.Component {
   render () {
 
     return (
-        <div>
-         {/****put login in here***/}
-          <div>
+        <div >
+          <header>
+            <NavBar />
+          </header>
+
+          <div class="container-fluid marginPush">
               {this.switchViews()}
           </div>
+
         </div>
     )
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
 
  //<Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) }/>
 
