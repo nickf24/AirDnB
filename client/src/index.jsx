@@ -8,6 +8,8 @@ import Listing from './components/Listing.jsx';
 import HomeView from './components/HomeView.jsx';
 import NavBar from './components/NavBar.jsx';
 
+// ../../sampleData/images
+
 
 class App extends React.Component {
 
@@ -22,7 +24,6 @@ class App extends React.Component {
 
   handleSearchSubmit(searchVal) {
     // nick's test
-    console.log('the searched value is', searchVal)
     this.setState({
       currentView: 'searchView'
     })

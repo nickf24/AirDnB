@@ -131,7 +131,7 @@ module.exports.Generator = function(array) {
 
     console.log('this is the array: ', array)
   for(var i = 1; i < 200; i++) {
-    var imageURL = './sampleData/images/image-' + (randomNumber(0, 29)).toString();
+    var imageURL = 'sampleData/images/image-' + (randomNumber(0, 29)).toString()+'.jpg';
     var tempListing = new Listing(i);
     tempListing.images.push(imageURL)
     //console.log('this is the listing: ', tempListing)
