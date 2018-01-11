@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const parser = require('body-parser');
-const dataGenerator = require('../client/dist/sampleData/data_generator.js');
+const dataGenerator = require('../sampleData/data_generator.js');
+const authentication = require('./authentication/authentication.js');
 //console.log('data generator func: ', dataGenerator)
 //// CONFIGURING PASSPORT /////
 var passport = require('passport');
@@ -31,8 +32,15 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log('received request: ', req.body);
-  //hello
-
+  authentication.verifyLogin(req.body, function(error, result) {
+    if (error) {
+      console.log('No user found');
+    } else {
+      req.login(result, function(err) {
+        res.redirect('/');
+      })
+    }
+  });
 })
 
 app.get('/listings', (req, res) => {
@@ -48,6 +56,17 @@ app.post('/', (req, res) => {
 app.post('/', (req, res) => {
   // default post
 });
+
+
+//// USER SERIALIZATION PROCESS ////
+passport.serializeUser(function(user_id, done) {
+  done(null, user_id);
+});
+
+passport.deserializeUser(function(user_id, done) {
+  done(null, user_id);
+});
+////////////////////////////////////
 
 // this is quite a small change
 var port = process.env.PORT || 3007;
