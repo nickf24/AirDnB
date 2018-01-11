@@ -12,11 +12,25 @@
 	border-style: solid;
 	border-width: 1px;
 	padding: 2em 2em 2em 2em;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
+}
+
+.navBarClean {
+	background-color: white;
+	top: 0;
+  	z-index: 999;
+  	position: fixed;
+  	width: 100%;
+	border-color: #D3D3D3;
+	border-style: solid;
+	border-width: 1px;
+	padding: .7em .7em .7em .7em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+
 .thumbnailListings{
-	padding: 2em 2em 2em 2em;
+	padding: 3em 3em 3em 3em;
 }
 
 .shadowButton{
@@ -35,20 +49,33 @@
     box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.1), 0 6px 15px 0 rgba(0, 0, 0, 0.05);
 }
 
-#login {
-  position: absolute;
-  z-index: -1;
+#shiftLeft {
+	margin-left: -15px;
 }
 
-.topRight {
-  position:absolute;
-  top:0;
-  right:0;
+#changeToRed {
+	color: red;
+}
+
+.jumbotron {
+	background-color: #f9f9f9;
+}
+
+.marginPush{
+	margin-bottom: 15px;
+}
+
+.zAxis{
+	z-index: -1;
 }
 
 i>p , h4 {
 	font-family: Oxygen;
 	display: inline;	
+}
+
+i {
+	color: #fd5c63;
 }
 
 div>p {
@@ -67,10 +94,19 @@ hr {
 	margin-bottom:2em;
 }
 
-#shiftLeft {
-	margin-left: -15px;
+a img:hover {
+    box-shadow: 0 0 6px 5px rgba(253,92,99, 1.0);
 }
 
-.jumbotron {
-	background-color: #f9f9f9;
+body {
+  padding-top: 60px;
 }
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
+}
+
+
+
+
