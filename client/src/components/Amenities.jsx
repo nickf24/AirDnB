@@ -1,6 +1,6 @@
 import React from 'react';
 
-let Amentities = (props) => {
+let Amenities = (props) => {
 
 	return (
 		<div>
@@ -50,4 +50,4 @@ var sampleData = {
     }]
  };
 
-export default Amentities
+export default Amenities

@@ -1,7 +1,8 @@
 import React from 'react';
 import Reservations from './Reservations.jsx';
 import DescriptionIcons from './DescriptionIcons.jsx';
-import Amentities from './Amentities.jsx';
+import Amenities from './Amenities.jsx';
+import Comments from './Comments.jsx';
 
 let Listing = ({ listing }) => {
 
@@ -17,7 +18,7 @@ let Listing = ({ listing }) => {
 						{/************ Quick Summary of Home ************/}
 						<h3 className="display-4">{sampleData.listings[0].summary}</h3>
 						<hr></hr>
-						{/************ Home Description ************/}
+						{/************z Home Description ************/}
 							<h4>{sampleData.listings[0].typeHome} - {sampleData.listings[0].City} - {sampleData.listings[0].State}</h4>
 						<br />
 						<br />
@@ -30,10 +31,10 @@ let Listing = ({ listing }) => {
 						</div>
 						<hr></hr>
 						{/************* Amentities ****************/}
-						<h4>Amentities</h4>
+						<h4>Amenities</h4>
 						<br />
 						<br />
-							<Amentities />
+							<Amenities />
 						<hr></hr>
 						{/************* House Rules ****************/}
 						<h4>House Rules</h4>
@@ -63,7 +64,9 @@ let Listing = ({ listing }) => {
 			<br />
 			<section className="bgimage cleanBorder" style={{backgroundImage: 'url('+sampleData.listings[0].imageURL[1]+')'}}></section>
 			<br />
-
+			
+			<Comments />
+		
 	</div>
 	)
 }
