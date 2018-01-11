@@ -17,7 +17,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       currentView: 'homeView',
-      currentListing: null
+      currentListing: null,
+      isLoggedIn: false
     }
   }
 
@@ -30,9 +31,13 @@ class App extends React.Component {
   }
   
   handleLoginSubmit(login) {
+    var app = this;
     axios.post('/login', login)
       .then(response => {
-        console.log(response); 
+         app.setState({
+           currentView: 'homeView',
+           isLoggedIn: true
+         })
       })
       .catch(error => {
         console.error(error); 
@@ -46,6 +51,12 @@ class App extends React.Component {
     })
   }
 
+  handleNavChange(view) {
+    this.setState({
+      currentView: view
+    });
+  }
+
   switchViews() {
     if (this.state.currentView === 'homeView') {
       return <HomeView searchClickFn ={ this.handleSearchSubmit.bind(this) }
@@ -54,6 +65,8 @@ class App extends React.Component {
       return <SearchView listingClickFn={ this.handleListingClick.bind(this) } />
     } else if (this.state.currentView === 'listView') {
       return <Listing listing={ this.state.currentListing } />
+    } else if (this.state.currentView === 'loginView') {
+      return <Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
     }
   }
 
@@ -63,10 +76,10 @@ class App extends React.Component {
     return (
         <div >
           <header>
-            <NavBar />
+            <NavBar isLoggedIn={ this.state.isLoggedIn } handleNavChange={ this.handleNavChange.bind(this) } />
           </header>
 
-          <div class="container-fluid marginPush">
+          <div className="container-fluid marginPush">
               {this.switchViews()}
           </div>
 
