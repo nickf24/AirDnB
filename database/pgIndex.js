@@ -1,4 +1,6 @@
 const { Pool, Client } = require('pg');
+let listings = require('../generatedSampleData.js');
+listings = listings.listingsData;
 
 const pool = new Pool({
   user: 'postgres',
@@ -31,20 +33,21 @@ let createUsers = `CREATE TABLE users (
 let createListings = `CREATE TABLE listings (
 
   id SERIAL,
-  name TEXT, 
+  listingTitle TEXT, 
   price NUMERIC,
-  images TEXT ARRAY,
+  images TEXT[],
   summary TEXT,
   street TEXT,
-  city TEXT,
-  reserved_dates DATE ARRAY,
   state TEXT,
+  city TEXT,
+  reserved_dates DATE[][],
   rating INTEGER,
   private BOOLEAN,
   typehome TEXT,
   bedrooms INTEGER,
   bathrooms INTEGER,
   description TEXT,
+  guests INTEGER,
   wifi BOOLEAN,
   kitchen BOOLEAN,
   parking BOOLEAN,
@@ -69,35 +72,57 @@ let createReservations = `CREATE TABLE reservations (
 )`
 
 
-// client.query(createUsers, (err, res) => {
-//   if (err) {
-//     console.log(err);
-//   }
-// })
+client.query('DROP TABLE IF EXISTS reservations');
+client.query('DROP TABLE IF EXISTS users');
+client.query('DROP TABLE IF EXISTS listings');
 
 
-// client.query(createListings, (err, res) => {
-//   if (err) {
-//     console.log(err);
-//   }
-// })
-
-
-// client.query(createReservations, (err, res) => {
-//   if (err) {
-//     console.log(err);
-//   } 
-  
-// })
-
-var queryStr = `INSERT INTO listings (name, price, description, street, city) VALUES ('A wahroonga to stay', 20000, 'Lovely Leafy Place', 'Wahroonga Ave', 'Sydney')` 
-client.query(queryStr, (err, res) => {
+client.query(createUsers, (err, res) => {
   if (err) {
     console.log(err);
   }
-  client.end();
 })
 
+
+client.query(createListings, (err, res) => {
+  if (err) {
+    console.log(err);
+  }
+})
+
+
+client.query(createReservations, (err, res) => {
+  if (err) {
+    console.log(err);
+  } 
+})
+
+
+function buildStatement (insert, rows) {
+  const params = []
+  const chunks = []
+  rows.forEach(row => {
+    const valueClause = []
+    Object.keys(row).forEach(p => {
+      params.push(row[p])
+      valueClause.push('$' + params.length)
+    })
+    chunks.push('(' + valueClause.join(', ') + ')')
+  })
+  return {
+    text: insert + chunks.join(', '),
+    values: params
+  }
+}
+
+client.query(buildStatement(`INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
+ guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES `, listings), (err, res) => {
+	if (err) {
+	  console.log(err);
+	} else {
+	  client.end();
+	}
+})
 
 let saveListing = function(params, callback) {
   // saves a new listing to the DB
@@ -112,6 +137,12 @@ let saveListing = function(params, callback) {
   	}
   });
 }
+
+let getReservationsByUser = function(username, callback) {
+  // input: username
+  // output: array of reservations currently made by that user
+}
+
 
 
 
