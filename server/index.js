@@ -32,6 +32,7 @@ app.post('/login', (req, res) => {
 
 app.get('/listings', (req, res) => {
   // default post
+  // 
   res.send(listings);
 });
 
