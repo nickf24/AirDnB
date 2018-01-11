@@ -13,7 +13,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentView: 'homeView'// evan's 
+      currentView: 'homeView',
+      currentListing: null
     }
   }
 
@@ -36,11 +37,21 @@ class App extends React.Component {
       });
   }
 
+  handleListingClick(listing) {
+    this.setState({
+      currentView: 'listView',
+      currentListing: listing
+    })
+  }
+
   switchViews() {
     if (this.state.currentView === 'homeView') {
-      return <HomeView searchClickFn = {this.handleSearchSubmit.bind(this)}/>
+      return <HomeView searchClickFn ={ this.handleSearchSubmit.bind(this) }
+                       listingClickFn={ this.handleListingClick.bind(this) } />
     } else if (this.state.currentView === 'searchView') {
-      return <SearchView />
+      return <SearchView listingClickFn={ this.handleListingClick.bind(this) } />
+    } else if (this.state.currentView === 'listView') {
+      return <Listing listing={ this.state.currentListing } />
     }
   }
 
@@ -53,7 +64,6 @@ class App extends React.Component {
           <div>
               {this.switchViews()}
           </div>
-            <Listing />
         </div>
     )
   }

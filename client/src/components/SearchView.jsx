@@ -30,7 +30,10 @@ class SearchView extends React.Component {
           <div className = 'row'>
             <div className="col-md-8 cleanBorder"> 
             <div className = 'row'>
-  	          {data2.map((house) => <HouseListing key = {JSON.stringify(house)} house = {house}/>)}
+              {data2.map((house) => <HouseListing key = {JSON.stringify(house)}
+                                                  house = {house} 
+                                                  listingClickFn={ this.props.listingClickFn } />
+              )}
               </div>
             </div> 
             <div className="col-md-4">

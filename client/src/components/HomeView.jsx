@@ -51,7 +51,10 @@ class HomeView extends React.Component {
           <div className = 'row'>
             <div className="col-md-12 cleanBorder"> 
             <div className = 'row'>
-  	          {this.state.listings.map((house) => <HouseListing key = {JSON.stringify(house)} house = {house}/>)}
+              {this.state.listings.map((house) => <HouseListing key = {JSON.stringify(house)} 
+                                                                house = {house} 
+                                                                listingClickFn={ this.props.listingClickFn } />
+              )}
               </div>
             </div> 
           

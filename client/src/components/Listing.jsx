@@ -3,7 +3,7 @@ import Reservations from './Reservations.jsx';
 import DescriptionIcons from './DescriptionIcons.jsx';
 import Amentities from './Amentities.jsx';
 
-let Listing = () => {
+let Listing = ({ listing }) => {
 
 	return (
 		<div className="container-fluid">
