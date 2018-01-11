@@ -8,9 +8,6 @@ import Listing from './components/Listing.jsx';
 import HomeView from './components/HomeView.jsx';
 import Navbar from './components/Navbar.jsx';
 
-// ../../sampleData/images
-
-
 class App extends React.Component {
 
   constructor(props) {

@@ -8,7 +8,6 @@ class HouseListing extends React.Component {
   }
 
   render() {
-  	// console.log(this.props.house)
   	return (
 			<div className ='img-responsive center-block col-md-3 col-sm-6 col-xs-12 img-thumbnail thumbnailListings'
 			     onClick={ this.props.listingClickFn.bind(null, this.props.house) } > 
