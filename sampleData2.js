@@ -70,7 +70,7 @@ var data2 = [
       City: 'San Francisco',
       State: 'CA',
       rating: 4,
-      price: '$110 USD per night',
+      price: '$170 USD per night',
       listingTitle: 'In the historical center of Lecce',
       private: true, //private home or not
       typeHome: 'home', //apartment, home, tent, RV
@@ -100,7 +100,7 @@ var data2 = [
       City: 'San Francisco',
       State: 'CA',
       rating: 4,
-      price: '$110 USD per night',
+      price: '$115 USD per night',
       listingTitle: 'In the historical center of Lecce',
       private: true, //private home or not
       typeHome: 'home', //apartment, home, tent, RV

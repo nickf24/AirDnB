@@ -2,11 +2,26 @@ import React from 'react';
 import data2 from '../../../sampleData2.js';
 import HouseListing from './HouseListing.jsx';
 
+const axios = require('axios');
+
 class SearchView extends React.Component {
   	
   constructor(props) {
   	super(props);
   }
+
+  componentDidMount() {
+
+    axios.get('/listings/:cityName').then(function(response) {
+      console.log('response from search get is', response)
+    }).then(function(error) {
+      console.log(error);
+    })
+
+
+  }
+
+
 
   render() {
   	return (
@@ -15,7 +30,7 @@ class SearchView extends React.Component {
           <div className = 'row'>
             <div className="col-md-8 cleanBorder"> 
             <div className = 'row'>
-  	          {data2.map((house) => <HouseListing house = {house}/>)}
+  	          {data2.map((house) => <HouseListing key = {JSON.stringify(house)} house = {house}/>)}
               </div>
             </div> 
             <div className="col-md-4">
