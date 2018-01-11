@@ -64,7 +64,7 @@ var reviews = ['There were monsters under the bed!',
               'I would not send my worst enemy here!', 
               'ehh it was fine', 
               'this place was pretty good!', 
-              'You wont be able to book this location because i am moving in.'];
+              'You wont be able to book this location because I am moving in.'];
 
 function randomDate(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -79,26 +79,8 @@ var randomBoolean = function() {
   return truthValue === 1 ? true : false;
 }
 
-class User {
- constructor(id, listings, reservations) {
-    this.id= id,//increment up by one
-    this.userName= 'JimboJones',//find random names
-    this.password= 'password',
-    this.listings= listings,
-    this.reservations= reservations
-  }
-}
-
-class Reservation {
-  constructor(listing_id, start_date, end_date) {
-      this.listing_id= null,
-      this.start_date= null,
-      this.end_date= null
-  }
-}
-
 class Listing  {
-  constructor(listing_id, comments) {
+  constructor(listing_id) {
     
       this.listing_id= listing_id,
       this.reserved_dates= [], //tuple of dates i.e [[1/9/18, 1/12/18], ...]
@@ -140,44 +122,13 @@ class Listing  {
                               
   }
 }
-// class Amenities {
-//   constructor() {
-//     this.amenities = [
-//     //summary= 'we have these amenities...', //might not be necessary. 
-//       {'wifi': randomBoolean()},
-//     {'kitchen': randomBoolean()},
-//         {'parking': randomBoolean()},
-//         {'pool': randomBoolean()}
-//     //gym= randomBoolean()
-    
-    
-//   ]
-// }
-// }
-class Comment {
-  constructor(body) {
-    this.body = body,
-    this.date= Date.now(); //change this to a random date
-  }
-}
 
-
-for(var i = 1; i < 100; i++) {
-  var imageURL = 'sampleData/images/image-' + (randomNumber(0, 29)).toString();
+for(var i = 1; i < 2; i++) {
+  var imageURL = './sampleData/images/image-' + (randomNumber(0, 29)).toString();
 
   var tempListing = new Listing();
-  var tempComment = new Comment(reviews[tempListing.rating]);
-  var tempListing = new Listing(i, tempComment);
+  var tempListing = new Listing(i);
   tempListing.images.push(imageURL)
-  var tempReservation = new Reservation();
-  //var tempUser = new User(i, tempListing,tempReservation)
   console.log(tempListing)
 
-
-
-
-  //console.log('users', tempListing.comments[0])
-
 }
-
- //{
