@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const parser = require('body-parser');
-
+const dataGenerator = require('../sampleData/data_generator.js');
+//console.log('data generator func: ', dataGenerator)
 //// CONFIGURING PASSPORT /////
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -216,3 +217,4 @@ let listings = [
                         ]
     }
     ];
+dataGenerator.Generator(listings);

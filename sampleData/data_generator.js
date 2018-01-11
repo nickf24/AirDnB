@@ -125,14 +125,19 @@ class Listing  {
   }
 }
 var arr= [];
-for(var i = 1; i < 200; i++) {
-  var imageURL = './sampleData/images/image-' + (randomNumber(0, 29)).toString();
 
-  var tempListing = new Listing();
-  var tempListing = new Listing(i);
-  tempListing.images.push(imageURL)
-  console.log(tempListing)
-  console.log(',')
+
+module.exports.Generator = function(array) {
+
+    console.log('this is the array: ', array)
+  for(var i = 1; i < 200; i++) {
+    var imageURL = './sampleData/images/image-' + (randomNumber(0, 29)).toString();
+    var tempListing = new Listing(i);
+    tempListing.images.push(imageURL)
+    //console.log('this is the listing: ', tempListing)
+    // console.log(',')
+    array.push(tempListing)
+  }
 
 }
 
