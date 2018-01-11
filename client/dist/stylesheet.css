@@ -30,7 +30,7 @@
 
 
 .thumbnailListings{
-	padding: 3em 3em 3em 3em;
+	padding-top: 1.5em
 }
 
 .shadowButton{
@@ -103,7 +103,7 @@ body {
 }
 @media (max-width: 979px) {
   body {
-    padding-top: 0px;
+    padding-top: 60px;
   }
 }
 
