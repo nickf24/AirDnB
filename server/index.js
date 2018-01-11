@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const parser = require('body-parser');
-const dataGenerator = require('../sampleData/data_generator.js');
+const dataGenerator = require('../client/dist/sampleData/data_generator.js');
 //console.log('data generator func: ', dataGenerator)
 //// CONFIGURING PASSPORT /////
 var passport = require('passport');
@@ -94,7 +94,7 @@ let listings = [
       {
   listing_id: 199,
   reserved_dates: [],
-  images: [ './sampleData/images/image-9' ],
+  images: [ '../sampleData/images/image-0.jpg' ],
   Street: 'street address',
   State: 'PR',
   City: 'Middleton',
