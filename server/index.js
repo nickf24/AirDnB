@@ -215,9 +215,4 @@ let listings = [
                         {imageURL: 'https://imgur.com/a/5DvdN'}
                         ]
     }
-
-
-
-
-
     ];

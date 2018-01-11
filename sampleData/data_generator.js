@@ -103,32 +103,37 @@ class Listing  {
                           {'wifi': randomBoolean()},
                           {'kitchen': randomBoolean()},
                           {'parking': randomBoolean()},
-                          {'pool': randomBoolean()}
+                          {'pool': randomBoolean()},
+                          {'gym': randomBoolean()}
                         ]                                //summary= 'we have these amenities...', //might not be necessary. 
                                          //gym= randomBoolean();
-      this.house_rules= `don't break them`,
+      this.house_rules= [`don't break them`],
       this.cancellations= 'you must inform by post',
       this.lat= null,    //Lat and Long can be replaced by city state address
       this.lon= null,
       this.comments= [
                       {'users': [
-                                  {'id': 2},
-                                  {'username': 'name'}
+                                  {'id': 2,
+                                  'username': 'name'}
                                 ],
                       'body': reviews[this.rating],
-                      'date': randomDate(new Date(2012, 0, 1), new Date())
+                      'date': (randomDate(new Date(2012, 0, 1), new Date()).toString()),
+                      'imageURL': 'https://i.pinimg.com/736x/37/f3/c4/37f3c436af086e2f835304592899713f--create-an-avatar-flat-style.jpg'
                     }
                       ]
                               
   }
 }
-
-for(var i = 1; i < 2; i++) {
+var arr= [];
+for(var i = 1; i < 200; i++) {
   var imageURL = './sampleData/images/image-' + (randomNumber(0, 29)).toString();
 
   var tempListing = new Listing();
   var tempListing = new Listing(i);
   tempListing.images.push(imageURL)
   console.log(tempListing)
+  console.log(',')
 
 }
+
+
