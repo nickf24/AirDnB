@@ -30,7 +30,7 @@ class Login extends React.Component {
 
   render() {
     return(
-      <div>
+      <div >
         Username: <input type="text" 
                          name="username"
                          value={ this.state.username }
@@ -40,10 +40,13 @@ class Login extends React.Component {
                          value={ this.state.password } 
                          onChange={ this.handleInput.bind(this, 'password') } />
                          {console.log(this.state.password)}
-        <button onClick={ this.handleLogin.bind(this) } >Login</button>
+        <button className="btn btn-danger btn-sm"onClick={ this.handleLogin.bind(this)}>Login</button>
       </div>
     );
   }
 }
 
+//<Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
+
 export default Login;
+

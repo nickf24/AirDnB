@@ -6,7 +6,7 @@ let Reservations = () => {
 
 		<div className="card sticky-top">
 			 <div className="card-header">
-				<h4>{sampleData.listings[0].price} per night</h4>
+				<h4>$ {sampleData.listings[0].price} per night</h4>
 			</div>
 			<br />
 

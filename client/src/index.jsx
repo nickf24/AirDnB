@@ -49,13 +49,11 @@ class App extends React.Component {
 
     return (
         <div>
-          <Login  handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
-          {this.switchViews()}
+         {/****put login in here***/}
           <div>
               {this.switchViews()}
           </div>
             <Listing />
-
         </div>
     )
   }
@@ -63,8 +61,9 @@ class App extends React.Component {
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
+ //<Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) }/>
 
-
+//<Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
               // <div className="container-fluid">
               //   <div className="row">
               //     <Listing />
