@@ -28,12 +28,18 @@ class Login extends React.Component {
     });
   }
 
+   // style={{backgroundImage: 'url("logo/login.jpeg")'}}
+   // style={{backgroundColor: "#FFFFFF"}}
+
   render() {
     return(
-      <div className="container">
+      <div className="bgimage zAxis" id="centerLogin" style={{backgroundImage: 'url("logo/login.jpeg")'}}>
+      <div >
+        <div className="offset-md-4 col-md-4 offset-md-4 cleanBorder" id="whiteBackground">
+        <img className="img-fluid rounded mx-auto d-block marginPush" src="logo/airdnb_logo_small.png"/>
         <form>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <h6> Username </h6>
             <input 
               type="text" 
               className="form-control" 
@@ -44,7 +50,7 @@ class Login extends React.Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <h6> Password </h6>
             <input 
               type="password" 
               className="form-control" 
@@ -53,11 +59,14 @@ class Login extends React.Component {
               value={ this.state.password }
               onChange={ this.handleInput.bind(this, 'password') } />
           </div>
+          <br />
           <button 
             type="button" 
-            className="btn btn-outline-danger my-2 my-sm-0"
+            className="btn btn-outline-danger btn-block"
             onClick={ this.handleLogin.bind(this) }>Login</button>
         </form>
+        </div>
+      </div>
       </div>
     );
   }
