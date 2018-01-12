@@ -33,7 +33,7 @@ class Login extends React.Component {
 
   render() {
     return(
-      <div className="bgimage zAxis" id="centerLogin" style={{backgroundImage: 'url("logo/login.jpeg")'}}>
+      <div className="bgimage zAxis" id="centerLogin" style={{backgroundImage: 'url("https://a0.muscache.com/im/pictures/53992414/64510035_original.jpg?aki_policy=xx_large")'}}>
       <div >
         <div className="offset-md-4 col-md-4 offset-md-4 cleanBorder" id="whiteBackground">
         <img className="img-fluid rounded mx-auto d-block marginPush" src="logo/airdnb_logo_small.png"/>

@@ -78,18 +78,18 @@ var randomBoolean = function() {
   var truthValue = randomNumber(0,1);
   return truthValue === 1 ? true : false;
 }
-// images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms, guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon
+
 class Listing  {
-  constructor() {
+  constructor(listing_id) {
     
-    
-       //tuple of dates i.e [[1/9/18, 1/12/18], ...]
+      this.listing_id= listing_id,
+      this.reserved_dates= [], //tuple of dates i.e [[1/9/18, 1/12/18], ...]
       this.images= [],
       this.Street= 'street address',
       this.State= statesAbbrev[randomNumber(0,59)],
       this.City= randomNumber(0,1) === 0 ? 'Middleton' : 'Shiresville',
       this.rating= randomNumber(1,5), 
-      this.price= randomNumber(100,1000),
+      this.price= randomNumber(100,1000).toString() + ' USD per night',
       this.listingTitle = 'Next to the most wonderful place on Earth!',
       this.private= randomBoolean(), //private home or not
       this.typeHome= homeTypeArray[randomNumber(0,3)], //apartment, home, tent, RV
@@ -97,15 +97,17 @@ class Listing  {
       this.bathrooms= this.bedrooms > 2 ? randomNumber(2, this.bedrooms) : 1,
       this.guests= this.bedrooms * 2,
       this.description= 'this is a place that you can sleep',
-      this.wifi = randomBoolean();
-      this.kitchen = randomBoolean();
-      this.parking = randomBoolean();
-      this.pool = randomBoolean();
-      this.gym = randomBoolean();
-      this.house_rules = ['No honey badgers allowed please', 'please refrain to jumping jacks at night', 'please do not play basketball in the house', 'no blow horns please']
-      //this.summary= 'summary string',                           //summary= 'we have these amenities...', //might not be necessary. 
+      //this.summary= 'summary string',
+      this.amenities =
+                        [
+                          {'wifi': randomBoolean()},
+                          {'kitchen': randomBoolean()},
+                          {'parking': randomBoolean()},
+                          {'pool': randomBoolean()},
+                          {'gym': randomBoolean()}
+                        ]                                //summary= 'we have these amenities...', //might not be necessary. 
                                          //gym= randomBoolean();
-      
+      this.house_rules= [`don't break them`],
       this.cancellations= 'you must inform by post',
       this.lat= null,    //Lat and Long can be replaced by city state address
       this.lon= null,
@@ -119,7 +121,6 @@ class Listing  {
                       'imageURL': 'https://i.pinimg.com/736x/37/f3/c4/37f3c436af086e2f835304592899713f--create-an-avatar-flat-style.jpg'
                     }
                       ]
-      
                               
   }
 }
@@ -128,12 +129,11 @@ var arr= [];
 
 module.exports.Generator = function(array) {
 
-    // console.log('this is the array: ', array)
+    console.log('this is the array: ', array)
   for(var i = 1; i < 200; i++) {
     var imageURL = 'sampleData/images/image-' + (randomNumber(0, 29)).toString()+'.jpg';
-    var imageURL2 = 'sampleData/images/image-' + (randomNumber(0, 29)).toString()+'.jpg';
     var tempListing = new Listing(i);
-    tempListing.images.push(imageURL, imageURL2)
+    tempListing.images.push(imageURL)
     //console.log('this is the listing: ', tempListing)
     // console.log(',')
     array.push(tempListing)

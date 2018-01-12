@@ -71,9 +71,10 @@
 
 
 #changeToRed {
+	margin-top: .8em;
+	padding-bottom: .2em;
 	color: red;
 }
-
 
 #centerLogin {
 	padding-top: 4em;
@@ -81,10 +82,15 @@
 
 #whiteBackground {
 	background-color: #ffffff;
+	opacity: 0.9;
 }
 
 #formPadding {
 	padding: 2em 2em 2em 2em;
+}
+
+#starUpMargin {
+	margin-top: -10px;
 }
 
 i>p , h4 {
@@ -96,15 +102,17 @@ i {
 	color: #fd5c63;
 }
 
-div>p {
+div>p#price {
 	font-family: Oxygen;
 	font-size: .8em;
 	margin-top: -5px;
+	margin-bottom: 0px;
+	padding-bottom: .2em;
 }
 
-div>h6 {
+div>h6#hi {
 	font-family: Oxygen;
-	margin-top: 1em;
+	margin-top: -.5em;
 }
 
 hr {

@@ -32,7 +32,9 @@ class Registration extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="bgimage zAxis" id="centerLogin" style={{backgroundImage: 'url("https://a0.muscache.com/im/pictures/a212f9a0-3550-4fb4-8d70-eceaafde4c1b.jpg?aki_policy=xx_large")'}}>
+        <div className="offset-md-4 col-md-4 offset-md-4 cleanBorder" id="whiteBackground">
+        <img className="img-fluid rounded mx-auto d-block marginPush" src="logo/airdnb_logo_small.png"/>
         <form>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -65,12 +67,14 @@ class Registration extends React.Component {
               value={ this.state.passwordMatch }
               onChange={ this.handleInput.bind(this, 'passwordMatch') } />
           </div>
+          <br />
           <button 
             type="button" 
-            className="btn btn-outline-danger my-2 my-sm-0"
-            onClick={ this.handleRegister.bind(this) }>Login</button>
+            className="btn btn-outline-danger btn-block"
+            onClick={ this.handleRegister.bind(this) }>Sign Up</button>
         </form>
       </div>
+    </div>
     )
   }
 }
