@@ -37,6 +37,9 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log('received request: ', req.body);
+
+  
+
   // authentication.verifyLogin(req.body, function(error, result) {
   //   if (error) {
   //     console.log('No user found');
