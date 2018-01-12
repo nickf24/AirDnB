@@ -5,6 +5,7 @@ const parser = require('body-parser');
 const dataGenerator = require('../client/dist/sampleData/data_generator.js');
 const authentication = require('./authentication/authentication.js');
 const db = require('../database/pgIndex.js');
+const expressValidator = require('express-validator');
 //console.log('data generator func: ', dataGenerator)
 //// CONFIGURING PASSPORT /////
 var passport = require('passport');
@@ -22,6 +23,7 @@ app.use(passport.session());
 
 
 app.use(parser.json());
+app.use(expressValidator());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 
@@ -46,6 +48,16 @@ app.post('/login', (req, res) => {
 
 app.post('/registration', (req, res) => {
   console.log('received request: ', req.body);
+  db.registerUser(req, (error, result) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json(error);
+    } else {
+      req.login(result, (error) => {
+        res.status(201).json(result);
+      });
+    }
+  })
 });
 
 app.get('/listings', (req, res) => {
@@ -78,7 +90,7 @@ passport.serializeUser(function(user_id, done) {
 passport.deserializeUser(function(user_id, done) {
   done(null, user_id);
 });
-////////////////////////////////////
+
 
 // this is quite a small change
 var port = process.env.PORT || 3007;

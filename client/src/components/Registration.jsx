@@ -17,14 +17,16 @@ class Registration extends React.Component {
   handleRegister() {
     var info = {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      passwordMatch: this.state.passwordMatch
     }
 
     this.props.handleRegistrationSubmit(info);
 
     this.setState({
       username: '',
-      password: ''
+      password: '',
+      passwordMatch: ''
     });
   }
 
