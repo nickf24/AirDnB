@@ -208,9 +208,11 @@ let registerUser = (req, callback) => {
 }
 
 let findUser = (username, callback) => {
-  var queryStr = "SELECT "
+  var queryStr = "SELECT password FROM users WHERE users.username=$1";
+  console.log(username);
 
-  client.query(queryStr, params, (error, result, fields) => {
+  client.query(queryStr, [username], (error, result, fields) => {
+    console.log('here');
     if (error) {
       callback(error, null);
     } else {
@@ -227,6 +229,7 @@ module.exports.saveListing = saveListing;
 module.exports.getListingsByCity = getListingsByCity;
 module.exports.registerUser = registerUser;
 module.exports.pool = pool;
+module.exports.findUser = findUser;
 
 
 

@@ -26,8 +26,25 @@ app.use(passport.session());
 passport.use(new LocalStrategy((username, password, done) => {
   console.log('username: ', username);
   console.log('password: ', password);
-  // db.query(username, )
-  return done(null, false);
+  db.findUser(username, (error, result) => {
+    console.log(result);
+    if (error) {
+      done(error);
+    } else {
+      if (result.rows.length === 0) {
+        done(null, false);
+      } else {
+        authentication.verifyPassword(password, result.rows[0].password, (error, result) => {
+          if (error) {
+            console.error(error);
+          } else {
+            console.log(result);
+            return done(null, 'true');
+          }
+        })
+      }
+    }
+  })
 }))
 
 
@@ -49,6 +66,7 @@ app.post('/login', (req, res) => {
       console.error(error);
       res.status(500).end();
     } else if (!user) {
+      console.log(user);
       res.status(409).send('Username or Password not found, please try again');
     } else {
       req.logIn(user, (error) => {
