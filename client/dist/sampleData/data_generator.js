@@ -1,64 +1,4 @@
-
-var homeTypeArray = ['apartment', 'home', 'tent', 'RV']
-var statesAbbrev = [ 'AL',
-  'AK',
-  'AS',
-  'AZ',
-  'AR',
-  'CA',
-  'CO',
-  'CT',
-  'DE',
-  'DC',
-  'FM',
-  'FL',
-  'GA',
-  'GU',
-  'HI',
-  'ID',
-  'IL',
-  'IN',
-  'IA',
-  'KS',
-  'KY',
-  'LA',
-  'ME',
-  'MH',
-  'MD',
-  'MA',
-  'MI',
-  'MN',
-  'MS',
-  'MO',
-  'MT',
-  'NE',
-  'NV',
-  'NH',
-  'NJ',
-  'NM',
-  'NY',
-  'NC',
-  'ND',
-  'MP',
-  'OH',
-  'OK',
-  'OR',
-  'PW',
-  'PA',
-  'PR',
-  'RI',
-  'SC',
-  'SD',
-  'TN',
-  'TX',
-  'UT',
-  'VT',
-  'VI',
-  'VA',
-  'WA',
-  'WV',
-  'WI',
-  'WY' ];
+const StatesAndCities = require('./ArrayLibrary.js').statesAndCities;
 
 var reviews = ['There were monsters under the bed!', 
               'I would not send my worst enemy here!', 
@@ -66,48 +6,75 @@ var reviews = ['There were monsters under the bed!',
               'this place was pretty good!', 
               'You wont be able to book this location because I am moving in.'];
 
-function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
+var homeTypeArray = ['apartment', 'home', 'tent', 'RV']
 
 var randomNumber = function(min, max) {
   var number = Math.round((max-min) * Math.random())
   return number
 }
+
 var randomBoolean = function() {
   var truthValue = randomNumber(0,1);
   return truthValue === 1 ? true : false;
 }
 
+function randomDate(start, end) {
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+}
+
+var randomState = function() {
+  var stateAbbrev = Object.keys(StatesAndCities);
+  var randomState = stateAbbrev[randomNumber(0, stateAbbrev.length - 1)]
+  return randomState
+}
+
+var randomCity = function(State) {
+  var randomCity = StatesAndCities[State][randomNumber(0, StatesAndCities[State].length - 1)];
+  return randomCity
+}
+var randomAddress = function() {
+  var num = randomNumber(10, 100) * 3
+  var streetNames = ['Main St.', 'Broadway', '2nd st.', 'Lucky Landy Ln.', 'Prospect cr.', '5th Av.', 'Skyway', 'Honeyrun rd.']
+  return num.toString() +' ' + streetNames[randomNumber(0, streetNames.length - 1)];
+}
+
+var listingSummary = function(city) {
+  var rn = randomNumber
+  var where = ['In', 'Next to', 'Near', 'Adjacent to', 'Close by']
+  var description = ['historic', 'lively', 'fun', 'wicked', 'wild', 'natural']
+  var area = ['district', 'neighborhood', 'region']
+  city = city[0] + city.slice(1).toLowerCase()
+  return `${where[rn(0, where.length- 1)]} the ${description[rn(0, description.length - 1)]} ${area[rn(0, area.length - 1)]} of ${city}` 
+}
+
+// images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms, guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon
 class Listing  {
-  constructor(listing_id) {
+  constructor() {
     
-      this.listing_id= listing_id,
-      this.reserved_dates= [], //tuple of dates i.e [[1/9/18, 1/12/18], ...]
+    
+       //tuple of dates i.e [[1/9/18, 1/12/18], ...]
       this.images= [],
       this.Street= 'street address',
-      this.State= statesAbbrev[randomNumber(0,59)],
-      this.City= randomNumber(0,1) === 0 ? 'Middleton' : 'Shiresville',
+      this.State= randomState(),
+      this.City= randomCity(this.State),
       this.rating= randomNumber(1,5), 
-      this.price= randomNumber(100,1000).toString() + ' USD per night',
-      this.listingTitle = 'Next to the most wonderful place on Earth!',
+      this.price= randomNumber(100,1000),
+      this.listingTitle = listingSummary(this.City),
       this.private= randomBoolean(), //private home or not
       this.typeHome= homeTypeArray[randomNumber(0,3)], //apartment, home, tent, RV
       this.bedrooms= this.typeHome !== 'tent' && this.typeHome !== 'RV' ? randomNumber(1,8) : 1,
       this.bathrooms= this.bedrooms > 2 ? randomNumber(2, this.bedrooms) : 1,
       this.guests= this.bedrooms * 2,
       this.description= 'this is a place that you can sleep',
-      //this.summary= 'summary string',
-      this.amenities =
-                        [
-                          {'wifi': randomBoolean()},
-                          {'kitchen': randomBoolean()},
-                          {'parking': randomBoolean()},
-                          {'pool': randomBoolean()},
-                          {'gym': randomBoolean()}
-                        ]                                //summary= 'we have these amenities...', //might not be necessary. 
+      this.wifi = randomBoolean();
+      this.kitchen = randomBoolean();
+      this.parking = randomBoolean();
+      this.pool = randomBoolean();
+      this.gym = randomBoolean();
+      this.house_rules = ['No honey badgers allowed please', 'please refrain to jumping jacks at night', 'please do not play basketball in the house', 'no blow horns please']
+      //this.summary= 'summary string',                           //summary= 'we have these amenities...', //might not be necessary. 
                                          //gym= randomBoolean();
-      this.house_rules= [`don't break them`],
+      
       this.cancellations= 'you must inform by post',
       this.lat= null,    //Lat and Long can be replaced by city state address
       this.lon= null,
@@ -121,24 +88,21 @@ class Listing  {
                       'imageURL': 'https://i.pinimg.com/736x/37/f3/c4/37f3c436af086e2f835304592899713f--create-an-avatar-flat-style.jpg'
                     }
                       ]
+      
                               
   }
 }
-var arr= [];
-
-
 module.exports.Generator = function(array) {
 
-    console.log('this is the array: ', array)
-  for(var i = 1; i < 200; i++) {
+    // console.log('this is the array: ', array)
+  for(var i = 1; i < 20; i++) {
     var imageURL = 'sampleData/images/image-' + (randomNumber(0, 29)).toString()+'.jpg';
+    var imageURL2 = 'sampleData/images/image-' + (randomNumber(0, 29)).toString()+'.jpg';
     var tempListing = new Listing(i);
-    tempListing.images.push(imageURL)
+    tempListing.images.push(imageURL, imageURL2)
     //console.log('this is the listing: ', tempListing)
     // console.log(',')
     array.push(tempListing)
   }
 
 }
-
-

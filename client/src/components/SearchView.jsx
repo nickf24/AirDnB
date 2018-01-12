@@ -21,8 +21,6 @@ class SearchView extends React.Component {
 
   }
 
-
-
   render() {
   	return (
  
@@ -41,12 +39,9 @@ class SearchView extends React.Component {
             </div>
           </div>
   	    </div> 
-
   	)
 
-
   }
-
 
 }
 
