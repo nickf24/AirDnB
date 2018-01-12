@@ -9,7 +9,7 @@ const expressValidator = require('express-validator');
 //console.log('data generator func: ', dataGenerator)
 //// CONFIGURING PASSPORT /////
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const pgSessions = require('connect-pg-simple') (session);
 app.use(session({ 
@@ -22,6 +22,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.use(new LocalStrategy((username, password, done) => {
+  console.log('username: ', username);
+  console.log('password: ', password);
+  return done(null, false);
+}))
 
 
 app.use(parser.json());
@@ -37,7 +43,22 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log('received request: ', req.body);
-
+  passport.authenticate('local', function(error, user, info) {
+    if (error) {
+      console.error(error);
+      res.status(500).end();
+    } else if (!user) {
+      res.status(409).send('Username or Password not found, please try again');
+    } else {
+      req.logIn(user, (error) => {
+        if (error) {
+          res.status(500).end();
+        } else {
+          res.status(201).end();
+        }
+      })
+    }
+  })(req, res);
   
 
   // authentication.verifyLogin(req.body, function(error, result) {
@@ -56,7 +77,7 @@ app.post('/registration', (req, res) => {
   db.registerUser(req, (error, result) => {
     if (error) {
       console.error(error);
-      res.status(500).json(error);
+      res.status(409).json(error);
     } else {
       req.login(result, (error) => {
         res.status(201).json(result);
