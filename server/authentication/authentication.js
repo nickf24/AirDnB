@@ -55,9 +55,9 @@ var hashPassword = (password, callback) => {
   })
 };
 
-var authenticator = () => {
+// var authenticator = () => {
 
-}
+// }
 
 module.exports = {
   verifyLogin: verifyLogin,

@@ -14,7 +14,6 @@ const pool = new Pool({
 //   connectionString: process.env.DATABASE_URL,
 //   ssl: true
 // })
-// 
 
 pool.on('error', (err, client) => {
   console.error('Unexpected error on idle client', err)
@@ -206,9 +205,18 @@ let registerUser = (req, callback) => {
 
     }
   });
+}
 
+let findUser = (username, callback) => {
+  var queryStr = "SELECT "
 
-
+  client.query(queryStr, params, (error, result, fields) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      callback(null, result);
+    }
+  })
 }
 
 

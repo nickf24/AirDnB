@@ -26,6 +26,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy((username, password, done) => {
   console.log('username: ', username);
   console.log('password: ', password);
+  // db.query(username, )
   return done(null, false);
 }))
 
