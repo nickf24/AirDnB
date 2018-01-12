@@ -22,7 +22,9 @@ class Navbar extends React.Component {
           <button className="btn btn-outline-danger"
                   onClick={ this.props.handleNavChange.bind(null, 'loginView') } 
                   >Login</button>
-          <button className="btn btn-outline-danger navButtonLeft">Register</button>
+          <button className="btn btn-outline-danger navButtonLeft"
+                  onClick={ this.props.handleNavChange.bind(null, 'registrationView') }
+                  >Register</button>
         </span>
       );
     } else {

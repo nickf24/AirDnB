@@ -7,6 +7,7 @@ import Login from './components/Login.jsx';
 import Listing from './components/Listing.jsx';
 import HomeView from './components/HomeView.jsx';
 import Navbar from './components/Navbar.jsx';
+import Registration from './components/Registration.jsx';
 
 class App extends React.Component {
 
@@ -41,6 +42,20 @@ class App extends React.Component {
       });
   }
 
+  handleRegistrationSubmit(account) {
+    var app = this;
+    axios.post('/registration', account)
+      .then(response => {
+        app.setState({
+          currentView: 'homeView',
+          isLoggedIn: true
+        })
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
+
   handleListingClick(listing) {
     this.setState({
       currentView: 'listView',
@@ -64,6 +79,8 @@ class App extends React.Component {
       return <Listing listing={ this.state.currentListing } />
     } else if (this.state.currentView === 'loginView') {
       return <Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
+    } else if (this.state.currentView === 'registrationView') {
+      return <Registration handleRegistrationSubmit={ this.handleRegistrationSubmit.bind(this) } />
     }
   }
 
