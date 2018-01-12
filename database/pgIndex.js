@@ -3,23 +3,34 @@ let authentication = require('../server/authentication/authentication.js');
 let listings = require('../generatedSampleData.js');
 listings = listings.listingsData;
 
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'airdnb',
+//   password: 'password'
+// })
+
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'airdnb',
-  password: 'password'
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
 })
+
 
 pool.on('error', (err, client) => {
   console.error('Unexpected error on idle client', err)
   process.exit(-1)
 })
 
+// const client = new Client({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'airdnb',
+//   password: 'password'
+// })
+
 const client = new Client({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'airdnb',
-  password: 'password'
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
 })
 
 client.connect();
