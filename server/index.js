@@ -8,18 +8,20 @@ const db = require('../database/pgIndex.js');
 const expressValidator = require('express-validator');
 //console.log('data generator func: ', dataGenerator)
 //// CONFIGURING PASSPORT /////
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const session = require('express-session');
+const pgSessions = require('connect-pg-simple') (session);
 app.use(session({ 
   secret: 'flyingMongeese',
   resave: false,
-  saveUninitialized: false 
+  saveUninitialized: false,
+  store: new pgSessions({
+    pool: db.pool
+  }),
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 
 app.use(parser.json());
@@ -35,15 +37,15 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log('received request: ', req.body);
-  authentication.verifyLogin(req.body, function(error, result) {
-    if (error) {
-      console.log('No user found');
-    } else {
-      req.login(result, function(err) {
-        res.redirect('/');
-      })
-    }
-  });
+  // authentication.verifyLogin(req.body, function(error, result) {
+  //   if (error) {
+  //     console.log('No user found');
+  //   } else {
+  //     req.login(result, function(err) {
+  //       res.redirect('/');
+  //     })
+  //   }
+  // });
 })
 
 app.post('/registration', (req, res) => {
@@ -84,6 +86,12 @@ app.get('/listings/:cityName', (req, res) => {
     }
   })
   // res.send(req.params.cityName)
+app.get('/authenticate', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json({loggedin: true});
+  } else {
+    res.status(200).json({loggedin: false});
+  }
 })
 
 

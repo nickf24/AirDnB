@@ -20,6 +20,13 @@ class App extends React.Component {
     }
   }
 
+  componentWillMount() {
+    var app = this;
+    axios.get('/authenticate')
+      .then(response => {
+        app.setState({isLoggedIn: response.data.loggedin});
+      })
+  }
 
   handleSearchSubmit(searchVal) {
     // nick's test

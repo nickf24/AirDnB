@@ -218,6 +218,7 @@ module.exports.getAllListings = getAllListings;
 module.exports.saveListing = saveListing;
 module.exports.getListingsByCity = getListingsByCity;
 module.exports.registerUser = registerUser;
+module.exports.pool = pool;
 
 
 
