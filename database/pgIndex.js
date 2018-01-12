@@ -3,35 +3,35 @@ let authentication = require('../server/authentication/authentication.js');
 let listings = require('../generatedSampleData.js');
 listings = listings.listingsData;
 
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'airdnb',
-//   password: 'password'
-// })
-
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+  user: 'postgres',
+  host: 'localhost',
+  database: 'airdnb',
+  password: 'password'
 })
 
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// })
+// 
 
 pool.on('error', (err, client) => {
   console.error('Unexpected error on idle client', err)
   process.exit(-1)
 })
 
-// const client = new Client({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'airdnb',
-//   password: 'password'
-// })
-
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+  user: 'postgres',
+  host: 'localhost',
+  database: 'airdnb',
+  password: 'password'
 })
+
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// })
 
 client.connect();
 
@@ -147,8 +147,8 @@ let getAllListings = function(callback) {
   })
 }
 
-let getListingsByCategory = function(city, callback) {
-  var queryStr = `SELECT * FROM listings WHERE ${category} LIKE '${city}'`
+let getListingsByCity = function(city, callback) {
+  var queryStr = `SELECT * FROM listings WHERE city LIKE '${city.toUpperCase()}'`
   client.query(queryStr, (err, res) => {
   	if (err) {
   	  callback(err, null);
@@ -216,7 +216,7 @@ let registerUser = (req, callback) => {
 
 module.exports.getAllListings = getAllListings;
 module.exports.saveListing = saveListing;
-module.exports.getListingsByCategory = getListingsByCategory;
+module.exports.getListingsByCity = getListingsByCity;
 module.exports.registerUser = registerUser;
 
 

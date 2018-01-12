@@ -8,31 +8,40 @@ class SearchView extends React.Component {
   	
   constructor(props) {
   	super(props);
+    this.state = {
+      listings: []
+    }
   }
 
   componentDidMount() {
-
-    axios.get('/listings/:cityName').then(function(response) {
-      console.log('response from search get is', response)
+    
+    let instance = this;
+    axios.get(`/listings/${instance.props.searchTerm}`).then(function(response) {
+      instance.setState({
+        listings: response.data.rows
+      })
     }).then(function(error) {
       console.log(error);
     })
 
-
   }
 
   render() {
-    
+    var noResults = null;
+    if (this.state.listings.length === 0) {
+      noResults = <div> Sorry, there appears to be no homes listed in this city </div>
+    }
   	return (
  
         <div className = 'container-fluid'> 
           <div className = 'row'>
             <div className="col-md-8 cleanBorder"> 
             <div className = 'row'>
-              {data2.map((house) => <HouseListing key = {JSON.stringify(house)}
+              {this.state.listings.map((house) => <HouseListing key = {JSON.stringify(house)}
                                                   house = {house} 
                                                   listingClickFn={ this.props.listingClickFn } />
               )}
+              {noResults}
               </div>
             </div> 
             <div className="col-md-4">
