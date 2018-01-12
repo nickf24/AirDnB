@@ -21,6 +21,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-register": "^6.7.2",
     "bcrypt": "^1.0.3",
+    "connect-pg-simple": "^4.2.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "express-validator": "^4.3.0",

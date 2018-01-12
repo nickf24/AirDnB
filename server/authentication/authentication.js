@@ -55,8 +55,23 @@ var hashPassword = (password, callback) => {
   })
 };
 
+var verifyPassword = (password, hash, callback) => {
+  bcrypt.compare(password, hash, (error, response) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      callback(null, response);
+    }
+  })
+}
+
+// var authenticator = () => {
+
+// }
+
 module.exports = {
   verifyLogin: verifyLogin,
   validateEntry: validateEntry,
-  hashPassword: hashPassword
+  hashPassword: hashPassword,
+  verifyPassword: verifyPassword
 }

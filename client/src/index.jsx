@@ -20,6 +20,13 @@ class App extends React.Component {
     }
   }
 
+  componentWillMount() {
+    var app = this;
+    axios.get('/authenticate')
+      .then(response => {
+        app.setState({isLoggedIn: response.data.loggedin});
+      })
+  }
 
   handleSearchSubmit(searchVal) {
     // nick's test
@@ -40,8 +47,22 @@ class App extends React.Component {
          })
       })
       .catch(error => {
-        console.error(error); 
+        console.error(error.body); 
       });
+  }
+
+  handleLogout() {
+    var app = this;
+    axios.get('/logout')
+    .then(response => {
+       app.setState({
+         currentView: 'homeView',
+         isLoggedIn: false
+       });
+    })
+    .catch(error => {
+      console.error(error.body); 
+    });
   }
 
   handleRegistrationSubmit(account) {
@@ -93,7 +114,9 @@ class App extends React.Component {
     return (
         <div >
           <header>
-            <Navbar isLoggedIn={ this.state.isLoggedIn } handleNavChange={ this.handleNavChange.bind(this) } />
+            <Navbar isLoggedIn={ this.state.isLoggedIn } 
+                    handleNavChange={ this.handleNavChange.bind(this) }
+                    handleLogout={ this.handleLogout.bind(this) } />
           </header>
           <div>
               {this.switchViews()}

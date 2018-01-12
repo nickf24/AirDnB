@@ -8,18 +8,47 @@ const db = require('../database/pgIndex.js');
 const expressValidator = require('express-validator');
 //console.log('data generator func: ', dataGenerator)
 //// CONFIGURING PASSPORT /////
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+const pgSessions = require('connect-pg-simple') (session);
 app.use(session({ 
   secret: 'flyingMongeese',
   resave: false,
-  saveUninitialized: false 
+  saveUninitialized: false,
+  store: new pgSessions({
+    pool: db.pool
+  }),
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
+passport.use(new LocalStrategy((username, password, done) => {
+  console.log('username: ', username);
+  console.log('password: ', password);
+  db.findUser(username, (error, result) => {
+    console.log(result);
+    if (error) {
+      done(error);
+    } else {
+      if (result.rows.length === 0) {
+        done(null, false);
+      } else {
+        authentication.verifyPassword(password, result.rows[0].password, (error, pwCheck) => {
+          if (error) {
+            console.error(error);
+          } else {
+            if (pwCheck === true) {
+              return done(null, {userid: result.rows[0].id})
+            } else {
+              return done(null, false);
+            }
+          }
+        })
+      }
+    }
+  })
+}))
 
 
 app.use(parser.json());
@@ -35,15 +64,29 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
   console.log('received request: ', req.body);
-  authentication.verifyLogin(req.body, function(error, result) {
+  passport.authenticate('local', function(error, user, info) {
     if (error) {
-      console.log('No user found');
+      console.error(error);
+      res.status(500).end();
+    } else if (!user) {
+      console.log(user);
+      res.status(409).send('Username or Password not found, please try again');
     } else {
-      req.login(result, function(err) {
-        res.redirect('/');
+      req.logIn(user, (error) => {
+        if (error) {
+          res.status(500).end();
+        } else {
+          res.status(201).end();
+        }
       })
     }
-  });
+  })(req, res);
+});
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send(200).end();
 })
 
 app.post('/registration', (req, res) => {
@@ -51,7 +94,7 @@ app.post('/registration', (req, res) => {
   db.registerUser(req, (error, result) => {
     if (error) {
       console.error(error);
-      res.status(500).json(error);
+      res.status(409).json(error);
     } else {
       req.login(result, (error) => {
         res.status(201).json(result);
@@ -83,7 +126,15 @@ app.get('/listings/:cityName', (req, res) => {
       res.send(results);
     }
   })
+});
+
   // res.send(req.params.cityName)
+app.get('/authenticate', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.status(200).json({loggedin: true});
+  } else {
+    res.status(200).json({loggedin: false});
+  }
 })
 
 
@@ -274,5 +325,6 @@ let listings = [
                         {imageURL: 'https://imgur.com/a/5DvdN'}
                         ]
     }
-    ];
+  ];
+
 dataGenerator.Generator(listings);
