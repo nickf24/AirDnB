@@ -21,7 +21,7 @@ let Reservations = ({listing}) => {
 				<button type="button" className="btn btn-danger btn-lg btn-block">REQUEST A BOOKING</button>
 		  	</div>
 
-				<div className="card-footer text-muted">5 STARS</div>
+				<div className="card-footer text-center">Rating: {listing.rating.map((star) => <i className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)}</div>
 		</div>
 	)
 }

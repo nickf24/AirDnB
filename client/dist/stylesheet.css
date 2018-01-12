@@ -93,6 +93,12 @@
 	margin-top: -10px;
 }
 
+#inlineBlock {
+	display: inline-block;
+	font-size: .8em;
+	margin-top: -.8em;
+}
+
 i>p , h4 {
 	font-family: Oxygen;
 	display: inline;	
@@ -106,7 +112,7 @@ div>p#price {
 	font-family: Oxygen;
 	font-size: .8em;
 	margin-top: -5px;
-	margin-bottom: 0px;
+	margin-bottom: -.5em;
 	padding-bottom: .2em;
 }
 

@@ -6,11 +6,20 @@ var reviews = ['There were monsters under the bed!',
               'this place was pretty good!', 
               'You wont be able to book this location because I am moving in.'];
 
-var homeTypeArray = ['apartment', 'home', 'tent', 'RV']
+var homeTypeArray = ['Apartment', 'Private Home', 'Tent', 'RV']
 
 var randomNumber = function(min, max) {
-  var number = Math.round((max-min) * Math.random())
+  var number = Math.ceil((max-min) * Math.random())
   return number
+}
+
+var rating = function() {
+  var ratingArr = [];
+  var rating = randomNumber(1,5);
+  for(var i = 0; i <= rating; i++) {
+    ratingArr.push('*')
+  }
+  return ratingArr; 
 }
 
 var randomBoolean = function() {
@@ -40,9 +49,9 @@ var randomAddress = function() {
 
 var listingSummary = function(city) {
   var rn = randomNumber
-  var where = ['In', 'Next to', 'Near', 'Adjacent to', 'Close by']
+  var where = ['In', 'Next to', 'Near', 'Close by']
   var description = ['historic', 'lively', 'fun', 'wicked', 'wild', 'natural']
-  var area = ['district', 'neighborhood', 'region']
+  var area = ['district', 'town', 'region']
   city = city[0] + city.slice(1).toLowerCase()
   return `${where[rn(0, where.length- 1)]} the ${description[rn(0, description.length - 1)]} ${area[rn(0, area.length - 1)]} of ${city}` 
 }
@@ -57,7 +66,7 @@ class Listing  {
       this.Street= 'street address',
       this.State= randomState(),
       this.City= randomCity(this.State),
-      this.rating= randomNumber(1,5), 
+      this.rating= rating(), 
       this.price= randomNumber(100,1000),
       this.listingTitle = listingSummary(this.City),
       this.private= randomBoolean(), //private home or not

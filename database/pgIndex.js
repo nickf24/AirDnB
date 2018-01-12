@@ -53,7 +53,7 @@ let createListings = `CREATE TABLE listings (
   state TEXT,
   city TEXT,
   reserved_dates DATE[][],
-  rating INTEGER,
+  rating TEXT ARRAY,
   private BOOLEAN,
   typehome TEXT,
   bedrooms INTEGER,

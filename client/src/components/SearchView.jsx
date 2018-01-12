@@ -22,6 +22,7 @@ class SearchView extends React.Component {
   }
 
   render() {
+    
   	return (
  
         <div className = 'container-fluid'> 
@@ -44,9 +45,6 @@ class SearchView extends React.Component {
   }
 
 }
-
-
-
 
 export default SearchView;
 
