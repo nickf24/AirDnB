@@ -74,6 +74,17 @@ app.get('/listings', (req, res) => {
   // res.send(listings);
 });
 
+app.get('/listings/:cityName', (req, res) => {
+  console.log('in get req', req.params.cityName)
+  db.getListingsByCity(req.params.cityName, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(results);
+    }
+  })
+  // res.send(req.params.cityName)
+})
 
 
 app.post('/listings', (req, res) => {

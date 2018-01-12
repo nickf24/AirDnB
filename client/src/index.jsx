@@ -23,8 +23,10 @@ class App extends React.Component {
 
   handleSearchSubmit(searchVal) {
     // nick's test
+    // console.log(searchVal);
     this.setState({
-      currentView: 'searchView'
+      currentView: 'searchView',
+      currentListing: searchVal
     })
   }
   
@@ -75,7 +77,7 @@ class App extends React.Component {
       return <HomeView searchClickFn ={ this.handleSearchSubmit.bind(this) }
                        listingClickFn={ this.handleListingClick.bind(this) } />
     } else if (this.state.currentView === 'searchView') {
-      return <SearchView listingClickFn={ this.handleListingClick.bind(this) } />
+      return <SearchView listingClickFn={ this.handleListingClick.bind(this) } searchTerm = {this.state.currentListing} />
     } else if (this.state.currentView === 'listView') {
       return <Listing listing={ this.state.currentListing } />
     } else if (this.state.currentView === 'loginView') {
