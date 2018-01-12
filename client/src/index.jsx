@@ -8,9 +8,6 @@ import Listing from './components/Listing.jsx';
 import HomeView from './components/HomeView.jsx';
 import Navbar from './components/Navbar.jsx';
 
-// ../../sampleData/images
-
-
 class App extends React.Component {
 
   constructor(props) {
@@ -78,8 +75,7 @@ class App extends React.Component {
           <header>
             <Navbar isLoggedIn={ this.state.isLoggedIn } handleNavChange={ this.handleNavChange.bind(this) } />
           </header>
-
-          <div className="container-fluid marginPush">
+          <div>
               {this.switchViews()}
           </div>
 

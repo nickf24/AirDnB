@@ -19,19 +19,19 @@ class Navbar extends React.Component {
     if (this.props.isLoggedIn === false) {
       return (
         <span className="navbar-right" >
-          <button className="btn btn-outline-danger my-2 my-sm-0"
+          <button className="btn btn-outline-danger"
                   onClick={ this.props.handleNavChange.bind(null, 'loginView') } 
                   >Login</button>
-          <button className="btn btn-outline-danger my-2 my-sm-0">Register</button>
+          <button className="btn btn-outline-danger navButtonLeft">Register</button>
         </span>
       );
     } else {
       return (
         <span className="navbar-right" >
-          <button className="btn btn-outline-danger my-2 my-sm-0"
+          <button className="btn btn-outline-danger"
                   onClick={ this.props.handleNavChange.bind(null, 'loginView') } 
                   >My Profile</button>
-          <button className="btn btn-outline-danger my-2 my-sm-0">Logout</button>
+          <button className="btn btn-outline-danger navButtonLeft">Logout</button>
         </span>
       );
     }
@@ -42,7 +42,7 @@ class Navbar extends React.Component {
       <div>
         <nav className="navbar navbar-static-top navBarClean">
           <div className="container-fluid">
-              <button className="btn btn-outline-danger my-2 my-sm-0" 
+              <button className="btn btn-outline-danger" 
                       type="button" 
                       onClick={ this.props.handleNavChange.bind(null, 'homeView') }
                       >Baby Got Back</button>
