@@ -124,7 +124,7 @@ client.query(buildStatement(`INSERT INTO listings(images, street, state, city, r
 
 
 let getAllListings = function(callback) {
-  var queryStr = `SELECT * FROM listings`;
+  var queryStr = `SELECT * FROM listings LIMIT 20`;
   client.query(queryStr, (err, res) => {
   	if (err) {
   	  callback(err, null);
