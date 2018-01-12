@@ -20,6 +20,15 @@ pool.on('error', (err, client) => {
   process.exit(-1)
 })
 
+// const client = new Client({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'airdnb',
+//   password: 'password'
+// })
+
+//comment
+
 const client = new Client({
   user: 'postgres',
   host: 'localhost',
