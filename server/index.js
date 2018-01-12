@@ -44,6 +44,10 @@ app.post('/login', (req, res) => {
   });
 })
 
+app.post('/registration', (req, res) => {
+  console.log('received request: ', req.body);
+});
+
 app.get('/listings', (req, res) => {
   // default post
   // 
@@ -63,10 +67,6 @@ app.get('/listings', (req, res) => {
 app.post('/listings', (req, res) => {
   // default post
 
-});
-
-app.post('/', (req, res) => {
-  // default post
 });
 
 
