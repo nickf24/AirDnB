@@ -1,4 +1,4 @@
-var users = [
+  var users = [
   {
     id: 1,
     username: 'PrismNick',

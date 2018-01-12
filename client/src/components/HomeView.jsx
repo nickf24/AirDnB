@@ -42,7 +42,7 @@ class HomeView extends React.Component {
                   <h2 className="display-4"> experiences all over the world. </h2>
                   <br />
                   <br />
-                  <Search clickFn = {this.props.searchClickFn}/>
+                  <Search clickFn = {this.props.searchClickFn} listings={this.state.listings}/>
                 </div>
               </div>
 

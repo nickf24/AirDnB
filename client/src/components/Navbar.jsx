@@ -30,7 +30,7 @@ class Navbar extends React.Component {
     } else {
       return (
         <span className="navbar-right" >
-          <button className="btn btn-outline-danger"
+          <button className="btn btn-outline-success"
                   onClick={ this.props.handleNavChange.bind(null, 'loginView') } 
                   >My Profile</button>
           <button className="btn btn-outline-danger navButtonLeft">Logout</button>
@@ -47,7 +47,7 @@ class Navbar extends React.Component {
               <button className="btn btn-outline-danger" 
                       type="button" 
                       onClick={ this.props.handleNavChange.bind(null, 'homeView') }
-                      >Baby Got Back</button>
+                      > Home</button>
                 { this.isLoggedIn() }
           </div>
         </nav> 
