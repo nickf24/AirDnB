@@ -101,11 +101,11 @@ ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFE
 // client.query('DROP TABLE IF EXISTS session');
 
 
-// client.query(createUsers, (err, res) => {
-//   if (err) {
-//     console.log(err);
-//   }
-// })
+client.query(createUsers, (err, res) => {
+  if (err) {
+    console.log(err);
+  }
+})
 
 
 client.query(createListings, (err, res) => {
