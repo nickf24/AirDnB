@@ -1,4 +1,5 @@
 const { Pool, Client } = require('pg');
+let authentication = require('../server/authentication/authentication.js');
 let listings = require('../generatedSampleData.js');
 listings = listings.listingsData;
 
@@ -25,7 +26,7 @@ client.connect();
 
 let createUsers = `CREATE TABLE users (
   id SERIAL,
-  username TEXT,
+  username TEXT UNIQUE,
   password TEXT,
   PRIMARY KEY (id)	
 )`
@@ -73,15 +74,15 @@ let createReservations = `CREATE TABLE reservations (
 
 
 client.query('DROP TABLE IF EXISTS reservations');
-client.query('DROP TABLE IF EXISTS users');
+// client.query('DROP TABLE IF EXISTS users');
 client.query('DROP TABLE IF EXISTS listings');
 
 
-client.query(createUsers, (err, res) => {
-  if (err) {
-    console.log(err);
-  }
-})
+// client.query(createUsers, (err, res) => {
+//   if (err) {
+//     console.log(err);
+//   }
+// })
 
 
 client.query(createListings, (err, res) => {
@@ -167,12 +168,45 @@ let getReservationsByUser = function(username, callback) {
   // output: array of reservations currently made by that user
 }
 
+let registerUser = (req, callback) => {
+  authentication.validateEntry(req, (error, result) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      authentication.hashPassword(req.body.password, (error, hash) => {
+        if (error) {
+          callback(error, null);
+        } else {
+          var params = [req.body.username, hash];
+          var queryStr = "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id"
+          client.query(queryStr, params, (error, result, fields) => {
+            if (error) {
+              if (error.code === '23505') {
+                var duplicateError = ['Username already exists'];
+              }
+              callback(duplicateError, null)
+            } else {
+              callback(null, result.rows[0].id);
+            }
+          })
+        }
+
+      })
+
+    }
+  });
+
+
+
+}
+
 
 
 
 module.exports.getAllListings = getAllListings;
 module.exports.saveListing = saveListing;
 module.exports.getListingsByCategory = getListingsByCategory;
+module.exports.registerUser = registerUser;
 
 
 

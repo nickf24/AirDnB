@@ -46,13 +46,14 @@ class App extends React.Component {
     var app = this;
     axios.post('/registration', account)
       .then(response => {
+        console.log(response);
         app.setState({
           currentView: 'homeView',
           isLoggedIn: true
         })
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
       })
   }
 
