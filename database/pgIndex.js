@@ -116,7 +116,7 @@ function buildStatement (insert, rows) {
 }
 
 client.query(buildStatement(`INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
- guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES `, listings), (err, res) => {
+ guests, description, wifi, kitchen, parking, pool, gym, house_rules, cancellations, lat, lon, comments) VALUES `, listings), (err, res) => {
 	if (err) {
 	  console.log(err);
 	}
