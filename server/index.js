@@ -34,12 +34,15 @@ passport.use(new LocalStrategy((username, password, done) => {
       if (result.rows.length === 0) {
         done(null, false);
       } else {
-        authentication.verifyPassword(password, result.rows[0].password, (error, result) => {
+        authentication.verifyPassword(password, result.rows[0].password, (error, pwCheck) => {
           if (error) {
             console.error(error);
           } else {
-            console.log(result);
-            return done(null, 'true');
+            if (pwCheck === true) {
+              return done(null, {userid: result.rows[0].id})
+            } else {
+              return done(null, false);
+            }
           }
         })
       }
@@ -78,17 +81,12 @@ app.post('/login', (req, res) => {
       })
     }
   })(req, res);
-  
+});
 
-  // authentication.verifyLogin(req.body, function(error, result) {
-  //   if (error) {
-  //     console.log('No user found');
-  //   } else {
-  //     req.login(result, function(err) {
-  //       res.redirect('/');
-  //     })
-  //   }
-  // });
+app.get('/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send(200).end();
 })
 
 app.post('/registration', (req, res) => {
@@ -128,6 +126,8 @@ app.get('/listings/:cityName', (req, res) => {
       res.send(results);
     }
   })
+});
+
   // res.send(req.params.cityName)
 app.get('/authenticate', (req, res) => {
   if (req.isAuthenticated()) {
@@ -325,5 +325,6 @@ let listings = [
                         {imageURL: 'https://imgur.com/a/5DvdN'}
                         ]
     }
-    ];
+  ];
+
 dataGenerator.Generator(listings);

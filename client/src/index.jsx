@@ -51,6 +51,20 @@ class App extends React.Component {
       });
   }
 
+  handleLogout() {
+    var app = this;
+    axios.get('/logout')
+    .then(response => {
+       app.setState({
+         currentView: 'homeView',
+         isLoggedIn: false
+       });
+    })
+    .catch(error => {
+      console.error(error.body); 
+    });
+  }
+
   handleRegistrationSubmit(account) {
     var app = this;
     axios.post('/registration', account)
@@ -100,7 +114,9 @@ class App extends React.Component {
     return (
         <div >
           <header>
-            <Navbar isLoggedIn={ this.state.isLoggedIn } handleNavChange={ this.handleNavChange.bind(this) } />
+            <Navbar isLoggedIn={ this.state.isLoggedIn } 
+                    handleNavChange={ this.handleNavChange.bind(this) }
+                    handleLogout={ this.handleLogout.bind(this) } />
           </header>
           <div>
               {this.switchViews()}
