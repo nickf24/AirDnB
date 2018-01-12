@@ -6,7 +6,7 @@ let Reservations = ({listing}) => {
 
 		<div className="card sticky-top zAxis">
 			 <div className="card-header">
-				<h4 className="text-center">{listing.price}</h4>
+				<h4 className="text-center">${listing.price} USD</h4>
 			</div>
 			<br />
 

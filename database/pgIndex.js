@@ -149,7 +149,7 @@ let getListingsByCategory = function(city, callback) {
 let saveListing = function(params, callback) {
   // saves a new listing to the DB
   // expects params to be an obj with the required params
-  console.log(params);
+  // console.log(params);
   var queryStr = `INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
  	guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES ('${params.images}')`
   // var queryStr = `INSERT INTO listings VALUES (${results.name}, ${results.price}, ${results.images}, ${results.summary}, ${results.street}, ${results.city})`

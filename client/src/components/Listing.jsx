@@ -8,7 +8,7 @@ let Listing = ({ listing }) => {
 
 	return (
 		<div className="container-fluid">
-			{console.log(listing.images[0])}
+		
 			{/************ Top paralax Image URL ************/}
 			<section className="bgimage cleanBorder" style={{backgroundImage: 'url('+listing.images[0]+')'}}></section>
 			<br />
