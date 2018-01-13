@@ -40,7 +40,9 @@ let createUsers = `CREATE TABLE IF NOT EXISTS users (
   id SERIAL,
   username TEXT UNIQUE,
   password TEXT,
-  PRIMARY KEY (id)  
+  email TEXT UNIQUE,
+  phone TEXT,
+  PRIMARY KEY (id)
 )`
 
 let createListings = `CREATE TABLE IF NOT EXISTS listings (
@@ -83,7 +85,7 @@ let createReservations = `CREATE TABLE IF NOT EXISTS reservations (
 let createSession = `
 CREATE TABLE IF NOT EXISTS "session" (
   "sid" varchar NOT NULL COLLATE "default",
-  "sess" json NOT NULL,
+	"sess" json NOT NULL,
   "expire" timestamp(6) NOT NULL
 )
 WITH (OIDS=FALSE);
@@ -294,8 +296,7 @@ let findUser = (username, callback) => {
 }
 
 let getUserProfile = (user, callback) => {
-  console.log('userid', user.userid);
-  var queryStr = "SELECT id, username FROM users WHERE users.id=$1";
+  var queryStr = "SELECT id, username, email, phone FROM users WHERE users.id=$1";
   
   client.query(queryStr, [user.userid], (error, result, fields) => {
     if (error) {

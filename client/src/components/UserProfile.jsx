@@ -15,6 +15,7 @@ class UserProfile extends React.Component {
     super(props);
     this.state = {
       user: this.props.user,
+      contactView: 'static',
       listings: []
     }
   }
@@ -33,22 +34,65 @@ class UserProfile extends React.Component {
 
   }
 
+  handleEmptyInput(property, string) {
+    if (this.state.user[property] === null) {
+      this.state.user[property] = string;
+      // this.setState({ user[property]: string });
+      return this.state.user[property];
+    } else {
+      return this.state.user[property];
+    }
+  }
+
+  showEditor(property, view) {
+    this.setState({
+      [property]: view
+    });
+  }
+
+  switchContactView() {
+    if (this.state.contactView === 'static') {
+      return (
+        <div className="card-body">
+          <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
+          <p className="card-text"> { this.handleEmptyInput('email', 'Email Address') } </p>
+          <p className="card-text"> { this.handleEmptyInput('phone', 'Phone Number') } </p>
+          <button className="btn btn-primary" onClick={this.showEditor.bind(this, 'contactView', 'edit') } > Add Verifications </button>
+        </div>
+      );
+    } else if (this.state.contactView === 'edit') {
+      return (
+        <div className="card-body">
+          <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
+          <div className="form-group" >
+            <input className="form-control"
+                   type="text"
+                   name="email"
+                   value={ this.handleEmptyInput('email', 'Email Address') } />
+          </div>
+          <div className="form-group">
+            <input className="form-control"
+                   type="text"
+                   name="phone"
+                   value={ this.handleEmptyInput('phone', 'Phone Number') } />
+          </div>
+          <button className="btn btn-primary" onClick={this.showEditor.bind(this, 'contactView', 'static') } > Save Edits </button>
+        </div>
+      )
+    }
+  }
+
   render() {
 
     return (
       <div>
+        {console.log('profile', this.state.user)}
         <div className="container-fluid">
           <div className="row UserProfile">
             <div className="col-md-4"> 
               <div className="card">
                 <img src="http://cvl-demos.cs.nott.ac.uk/vrn/queue/59b4192763dd4.jpg" className="card-img-top rounded-circle border border-dark float-left" />
-                <div className="card-body">
-                  <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
-                  <p className="card-text"> Email Address </p>
-                  <p className="card-text"> Phone Number </p>
-                  <p className="card-text"> Contact </p>
-                  <a href="#" className="btn btn-primary"> Add Verifications </a>
-                </div>
+                { this.switchContactView() }
             </div>
             <div className="card UserProfile">
               <div className="card-header">
@@ -77,3 +121,11 @@ class UserProfile extends React.Component {
   }
 }
 export default UserProfile;
+
+{/* <div className="card-body">
+                  <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
+                  <p className="card-text"> Email Address </p>
+                  <p className="card-text"> Phone Number </p>
+                  <p className="card-text"> Contact </p>
+                  <a href="#" className="btn btn-primary"> Add Verifications </a>
+                </div> */}

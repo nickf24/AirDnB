@@ -25,7 +25,6 @@ app.use(passport.session());
 
 passport.use(new LocalStrategy((username, password, done) => {
   console.log('username: ', username);
-  console.log('password: ', password);
   db.findUser(username, (error, result) => {
     console.log(result);
     if (error) {
@@ -142,8 +141,12 @@ app.get('/profile', (req, res) => {
     res.status(401).end();
   } else {
     db.getUserProfile(req.user, (error, result) => {
-      console.log(result);
-      res.status(200).json(result.rows[0]);
+      if (error) {
+        console.error(error);
+      } else {
+        console.log(result);
+        res.status(200).json(result.rows[0]);
+      }
     })
   }
 })

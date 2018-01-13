@@ -100,7 +100,7 @@ class App extends React.Component {
     var app = this;
     axios.get('/profile')
       .then(response => {
-        console.log(response);
+        console.log('this response', response);
         app.setState({
           currentView: 'profileView',
           currentUser: response.data
