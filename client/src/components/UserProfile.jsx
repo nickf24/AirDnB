@@ -4,7 +4,7 @@ import HouseListing from './HouseListing.jsx';
 import Search from './Search.jsx';
 import Navbar from './Navbar.jsx';
 import SearchView from './SearchView.jsx';
-import Footer from './Footer.jsx';
+import Footer from './footer.jsx';
 import ReservationListing from './ReservationListing.jsx';
 
 const axios = require('axios');
