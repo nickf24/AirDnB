@@ -38,6 +38,7 @@
     "react-date-picker": "^6.6.2",
     "react-day-picker": "^7.0.7",
     "react-dom": "^16.2.0",
+    "react-helmet": "^5.2.0",
     "state-cities": "^1.0.6",
     "style-loader": "^0.19.1",
     "webpack": "^2.2.1"
