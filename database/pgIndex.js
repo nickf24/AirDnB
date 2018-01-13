@@ -1,4 +1,5 @@
 const { Pool, Client } = require('pg');
+const moment = require('moment');
 let authentication = require('../server/authentication/authentication.js');
 let listings = require('../generatedSampleData.js');
 listings = listings.listingsData;
@@ -171,6 +172,41 @@ let getListingsByCity = function(city, callback) {
   })
 }
 
+let updateReservedDates = function(listingId, newFromDate, newToDate, callback) {
+
+  var queryStr1 = `SELECT reserved_dates FROM listings WHERE id = ${listingId}`;
+  client.query(queryStr1, (err, res) => {
+    if (err) {
+      console.log(err);
+    } else {
+      let alreadyReserved = res.rows[0].reserved_dates;
+      var clash = false;
+      for (var i = 0; i < alreadyReserved.length; i = i + 2) {
+        
+        if (moment(newFromDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1]) || moment(newToDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1])) {
+          clash = true;
+        }
+      }
+      console.log('POST COMPARISON', clash)
+      if (clash) {
+        callback(null, 'clash');
+      } else {
+        var queryStr = `UPDATE listings SET reserved_dates = reserved_dates || '{${newFromDate}, ${newToDate}}' WHERE id = ${listingId}`;
+        client.query(queryStr, (err, res) => {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, res);
+          }
+        });
+      } 
+
+    }
+  })
+
+  
+}
+
 let saveListing = function(params, callback) {
   // saves a new listing to the DB
   // expects params to be an obj with the required params
@@ -256,6 +292,7 @@ module.exports.registerUser = registerUser;
 module.exports.pool = pool;
 module.exports.findUser = findUser;
 module.exports.getUserProfile = getUserProfile;
+module.exports.updateReservedDates = updateReservedDates;
 
 
 

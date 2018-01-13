@@ -4,13 +4,6 @@ const axios = require('axios');
 
 class Reservations extends React.Component {
 
-=======
-
-import Calendar from './Calendar.jsx';
-
-class Reservations extends React.Component {
-
-
   constructor(props) {
   	super(props);
   	this.buttonClickFn = this.buttonClickFn.bind(this);
@@ -77,27 +70,6 @@ class Reservations extends React.Component {
   	}
 
   	return (
-  	  to: undefined
-  	}
-  } 
-
-  sendBookingRequest(fromDate, toDate) {
-  	console.log(fromDate, toDate);
-  	this.setState({
-  		from: fromDate,
-  		to: toDate
-  	})
-  	// console.log('AFTER STATE CHANGE', this.state.from, this.state.to)
-  }
-
-  buttonClickFn(fromDate, toDate) {
-  	console.log('IN BUTTON', fromDate, toDate);
-  }
-
-  render() {
-
-  	return (
-
 
 		<div className="card sticky-top zAxis">
 			 <div className="card-header">
@@ -105,11 +77,7 @@ class Reservations extends React.Component {
 			</div>
 			<br />
 
-
 			<div> {clashMessage} </div>
-		  	<div className="card-body">
-
-
 		  	<div className="card-body">
 
 				<Calendar changeFn = {this.sendBookingRequest.bind(this)} />
