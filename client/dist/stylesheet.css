@@ -62,13 +62,24 @@
 }
 
 .zAxis{
-	z-index: -1;
+	padding-top: 60px;
+	z-index: 998;
 }
 
 #shiftLeft {
 	margin-left: -15px;
 }
 
+.formPush {
+	margin-bottom: 1em;
+}
+
+#centerImage {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2em;
+}
 
 #changeToRed {
 	margin-top: .8em;

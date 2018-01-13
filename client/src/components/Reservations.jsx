@@ -18,7 +18,7 @@ let Reservations = ({listing}) => {
 				<br />
 				<input className="form-control" type="text" placeholder="Check Out"/>
 				<br />
-				<button type="button" className="btn btn-danger btn-lg btn-block">REQUEST A BOOKING</button>
+				<a href='#'><button type="button" className="btn btn-danger btn-lg btn-block">REQUEST A BOOKING</button></a>
 		  	</div>
 
 				<div className="card-footer text-center">Rating: {listing.rating.map((star) => <i className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)}</div>

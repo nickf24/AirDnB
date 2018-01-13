@@ -9,6 +9,7 @@ import HomeView from './components/HomeView.jsx';
 import Navbar from './components/Navbar.jsx';
 import Registration from './components/Registration.jsx';
 import UserProfile from './components/UserProfile.jsx';
+import ListingForm from './components/ListingForm.jsx';
 
 class App extends React.Component {
 
@@ -140,6 +141,7 @@ class App extends React.Component {
           </header>
           <div>
               {this.switchViews()}
+              <ListingForm />
           </div>
 
         </div>
