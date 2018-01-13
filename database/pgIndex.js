@@ -20,15 +20,6 @@ pool.on('error', (err, client) => {
   process.exit(-1)
 })
 
-// const client = new Client({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'airdnb',
-//   password: 'password'
-// })
-
-//comment
-
 const client = new Client({
   user: 'postgres',
   host: 'localhost',
@@ -43,15 +34,14 @@ const client = new Client({
 
 client.connect();
 
-let createUsers = `CREATE TABLE users (
+let createUsers = `CREATE TABLE IF NOT EXISTS users (
   id SERIAL,
   username TEXT UNIQUE,
   password TEXT,
-  PRIMARY KEY (id)	
+  PRIMARY KEY (id)  
 )`
 
-let createListings = `CREATE TABLE listings (
-
+let createListings = `CREATE TABLE IF NOT EXISTS listings (
   id SERIAL,
   listingTitle TEXT, 
   price NUMERIC,
@@ -79,23 +69,20 @@ let createListings = `CREATE TABLE listings (
   lon NUMERIC,
   comments TEXT ARRAY,
   PRIMARY KEY (id)
-
 )`
 
-let createReservations = `CREATE TABLE reservations (
-
+let createReservations = `CREATE TABLE IF NOT EXISTS reservations (
   id SERIAL,
   user_id SERIAL references users(id),
   listing_id SERIAL references listings(id),
   days_reserved DATE ARRAY
-
 )`
 
 let createSession = `
-CREATE TABLE "session" (
+CREATE TABLE IF NOT EXISTS "session" (
   "sid" varchar NOT NULL COLLATE "default",
-	"sess" json NOT NULL,
-	"expire" timestamp(6) NOT NULL
+  "sess" json NOT NULL,
+  "expire" timestamp(6) NOT NULL
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
@@ -104,10 +91,10 @@ ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFE
 
 
 
-client.query('DROP TABLE IF EXISTS reservations');
-client.query('DROP TABLE IF EXISTS users');
-client.query('DROP TABLE IF EXISTS listings');
-client.query('DROP TABLE IF EXISTS session');
+// client.query('DROP TABLE IF EXISTS reservations');
+// client.query('DROP TABLE IF EXISTS users');
+// client.query('DROP TABLE IF EXISTS listings');
+// client.query('DROP TABLE IF EXISTS session');
 
 
 client.query(createUsers, (err, res) => {
@@ -155,32 +142,32 @@ function buildStatement (insert, rows) {
 
 client.query(buildStatement(`INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
  guests, description, wifi, kitchen, parking, pool, gym, house_rules, cancellations, lat, lon, comments) VALUES `, listings), (err, res) => {
-	if (err) {
-	  console.log(err);
-	}
+  if (err) {
+    console.log(err);
+  }
 })
 
 
 let getAllListings = function(callback) {
   var queryStr = `SELECT * FROM listings LIMIT 20`;
   client.query(queryStr, (err, res) => {
-  	if (err) {
-  	  callback(err, null);
-  	} else {
-  	  callback(null, res);
-  	  // client.end()
-  	}
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+      // client.end()
+    }
   })
 }
 
 let getListingsByCity = function(city, callback) {
   var queryStr = `SELECT * FROM listings WHERE city LIKE '${city.toUpperCase()}'`
   client.query(queryStr, (err, res) => {
-  	if (err) {
-  	  callback(err, null);
-  	} else {
-  	  callback(null, res);
-  	}
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
   })
 }
 
@@ -189,14 +176,14 @@ let saveListing = function(params, callback) {
   // expects params to be an obj with the required params
   // console.log(params);
   var queryStr = `INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
- 	guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES ('${params.images}')`
+  guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES ('${params.images}')`
   // var queryStr = `INSERT INTO listings VALUES (${results.name}, ${results.price}, ${results.images}, ${results.summary}, ${results.street}, ${results.city})`
   // client.query(queryStr, (err, res) => {
-  // 	if (err) {
-  // 	  callback(err, null);
-  // 	} else {
+  //  if (err) {
+  //    callback(err, null);
+  //  } else {
   //     callback(null, res);
-  // 	}
+  //  }
   // });
 }
 
