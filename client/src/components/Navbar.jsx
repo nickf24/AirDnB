@@ -43,14 +43,17 @@ class Navbar extends React.Component {
   render () {
     return (
       <div>
-        <nav className="navbar navbar-static-top navBarClean">
-          <div className="container-fluid">
+        <nav className="navbar navbar-static-top navBarClean">         
+              <span className="navbar-left">
               <button className="btn btn-outline-danger" 
                       type="button" 
                       onClick={ this.props.handleNavChange.bind(null, 'homeView') }
                       > Home</button>
+              <button className="btn btn-outline-danger navButtonLeft" 
+                      type="button" 
+                      > Host Listing</button>
+              </span>
                 { this.isLoggedIn() }
-          </div>
         </nav> 
       </div>
     )
