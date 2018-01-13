@@ -93,6 +93,17 @@ class App extends React.Component {
     });
   }
 
+  handleProfileView () {
+    var app = this;
+    axios.get('/profile')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
+
   switchViews() {
     if (this.state.currentView === 'homeView') {
       return <HomeView searchClickFn ={ this.handleSearchSubmit.bind(this) }
@@ -116,7 +127,8 @@ class App extends React.Component {
           <header>
             <Navbar isLoggedIn={ this.state.isLoggedIn } 
                     handleNavChange={ this.handleNavChange.bind(this) }
-                    handleLogout={ this.handleLogout.bind(this) } />
+                    handleLogout={ this.handleLogout.bind(this) } 
+                    handleProfileView={ this.handleProfileView.bind(this) } />
           </header>
           <div>
               {this.switchViews()}

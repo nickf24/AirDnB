@@ -3,34 +3,34 @@ let authentication = require('../server/authentication/authentication.js');
 let listings = require('../generatedSampleData.js');
 listings = listings.listingsData;
 
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'airdnb',
-//   password: 'password'
-// })
-
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+  user: 'postgres',
+  host: 'localhost',
+  database: 'airdnb',
+  password: 'password'
 })
+
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// })
 
 pool.on('error', (err, client) => {
   console.error('Unexpected error on idle client', err)
   process.exit(-1)
 })
 
-// const client = new Client({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'airdnb',
-//   password: 'password'
-// })
-
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+  user: 'postgres',
+  host: 'localhost',
+  database: 'airdnb',
+  password: 'password'
 })
+
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// })
 
 client.connect();
 
@@ -227,10 +227,20 @@ let registerUser = (req, callback) => {
 
 let findUser = (username, callback) => {
   var queryStr = "SELECT id, password FROM users WHERE users.username=$1";
-  console.log(username);
 
   client.query(queryStr, [username], (error, result, fields) => {
-    console.log('here');
+    if (error) {
+      callback(error, null);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
+let getUserProfile = (userid, callback) => {
+  var queryStr = "SELECT id, username FROM users WHERE users.id=$1";
+  
+  client.query(queryStr, [userid], (error, result, fields) => {
     if (error) {
       callback(error, null);
     } else {
@@ -248,6 +258,7 @@ module.exports.getListingsByCity = getListingsByCity;
 module.exports.registerUser = registerUser;
 module.exports.pool = pool;
 module.exports.findUser = findUser;
+module.exports.getUserProfile = getUserProfile;
 
 
 
