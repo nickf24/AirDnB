@@ -142,6 +142,7 @@ app.get('/profile', (req, res) => {
     res.status(401).end();
   } else {
     db.getUserProfile(req.user, (error, result) => {
+      console.log(result);
       res.status(200).json(result.rows[0]);
     })
   }

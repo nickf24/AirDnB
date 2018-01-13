@@ -8,6 +8,7 @@ import Listing from './components/Listing.jsx';
 import HomeView from './components/HomeView.jsx';
 import Navbar from './components/Navbar.jsx';
 import Registration from './components/Registration.jsx';
+import UserProfile from './components/UserProfile.jsx';
 
 class App extends React.Component {
 
@@ -16,7 +17,8 @@ class App extends React.Component {
     this.state = {
       currentView: 'homeView',
       currentListing: null,
-      isLoggedIn: false
+      isLoggedIn: false,
+      currentUser: null
     }
   }
 
@@ -93,11 +95,15 @@ class App extends React.Component {
     });
   }
 
-  handleProfileView () {
+  handleProfileView() {
     var app = this;
     axios.get('/profile')
       .then(response => {
         console.log(response);
+        app.setState({
+          currentView: 'profileView',
+          currentUser: response.data
+        })
       })
       .catch(error => {
         console.error(error);
@@ -116,6 +122,8 @@ class App extends React.Component {
       return <Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
     } else if (this.state.currentView === 'registrationView') {
       return <Registration handleRegistrationSubmit={ this.handleRegistrationSubmit.bind(this) } />
+    } else if (this.state.currentView === 'profileView') {
+      return <UserProfile user={ this.state.currentUser } />
     }
   }
 

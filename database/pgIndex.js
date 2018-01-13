@@ -237,10 +237,11 @@ let findUser = (username, callback) => {
   })
 }
 
-let getUserProfile = (userid, callback) => {
+let getUserProfile = (user, callback) => {
+  console.log('userid', user.userid);
   var queryStr = "SELECT id, username FROM users WHERE users.id=$1";
   
-  client.query(queryStr, [userid], (error, result, fields) => {
+  client.query(queryStr, [user.userid], (error, result, fields) => {
     if (error) {
       callback(error, null);
     } else {
