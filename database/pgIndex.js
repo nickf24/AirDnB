@@ -179,12 +179,14 @@ let updateReservedDates = function(listingId, newFromDate, newToDate, callback) 
     if (err) {
       console.log(err);
     } else {
-      let alreadyReserved = res.rows[0].reserved_dates;
       var clash = false;
-      for (var i = 0; i < alreadyReserved.length; i = i + 2) {
+      let alreadyReserved = res.rows[0].reserved_dates;
+      if (alreadyReserved !== null) { 
         
-        if (moment(newFromDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1]) || moment(newToDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1])) {
-          clash = true;
+        for (var i = 0; i < alreadyReserved.length; i = i + 2) {
+          if (moment(newFromDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1]) || moment(newToDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1])) {
+            clash = true;
+          }
         }
       }
       console.log('POST COMPARISON', clash)

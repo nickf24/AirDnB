@@ -66,7 +66,7 @@ class Reservations extends React.Component {
   	}
 
   	if (this.state.clash === 'nope') {
-  	  clashMessage = <div> These dates have been booked! </div>
+  	  clashMessage = <div> Consider it done! </div>
   	}
 
   	return (
