@@ -1,4 +1,5 @@
 const { Pool, Client } = require('pg');
+const moment = require('moment');
 let authentication = require('../server/authentication/authentication.js');
 let listings = require('../generatedSampleData.js');
 listings = listings.listingsData;
@@ -38,11 +39,10 @@ let createUsers = `CREATE TABLE IF NOT EXISTS users (
   id SERIAL,
   username TEXT UNIQUE,
   password TEXT,
-  PRIMARY KEY (id)	
+  PRIMARY KEY (id)  
 )`
 
 let createListings = `CREATE TABLE IF NOT EXISTS listings (
-
   id SERIAL,
   listingTitle TEXT, 
   price NUMERIC,
@@ -70,23 +70,20 @@ let createListings = `CREATE TABLE IF NOT EXISTS listings (
   lon NUMERIC,
   comments TEXT ARRAY,
   PRIMARY KEY (id)
-
 )`
 
 let createReservations = `CREATE TABLE IF NOT EXISTS reservations (
-
   id SERIAL,
   user_id SERIAL references users(id),
   listing_id SERIAL references listings(id),
   days_reserved DATE ARRAY
-
 )`
 
 let createSession = `
 CREATE TABLE IF NOT EXISTS "session" (
   "sid" varchar NOT NULL COLLATE "default",
-	"sess" json NOT NULL,
-	"expire" timestamp(6) NOT NULL
+  "sess" json NOT NULL,
+  "expire" timestamp(6) NOT NULL
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
@@ -146,33 +143,70 @@ function buildStatement (insert, rows) {
 
 client.query(buildStatement(`INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
  guests, description, wifi, kitchen, parking, pool, gym, house_rules, cancellations, lat, lon, comments) VALUES `, listings), (err, res) => {
-	if (err) {
-	  console.log(err);
-	}
+  if (err) {
+    console.log(err);
+  }
 })
 
 
 let getAllListings = function(callback) {
   var queryStr = `SELECT * FROM listings LIMIT 20`;
   client.query(queryStr, (err, res) => {
-  	if (err) {
-  	  callback(err, null);
-  	} else {
-  	  callback(null, res);
-  	  // client.end()
-  	}
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+      // client.end()
+    }
   })
 }
 
 let getListingsByCity = function(city, callback) {
   var queryStr = `SELECT * FROM listings WHERE city LIKE '${city.toUpperCase()}'`
   client.query(queryStr, (err, res) => {
-  	if (err) {
-  	  callback(err, null);
-  	} else {
-  	  callback(null, res);
-  	}
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
   })
+}
+
+let updateReservedDates = function(listingId, newFromDate, newToDate, callback) {
+
+  var queryStr1 = `SELECT reserved_dates FROM listings WHERE id = ${listingId}`;
+  client.query(queryStr1, (err, res) => {
+    if (err) {
+      console.log(err);
+    } else {
+      var clash = false;
+      let alreadyReserved = res.rows[0].reserved_dates;
+      if (alreadyReserved !== null) { 
+        
+        for (var i = 0; i < alreadyReserved.length; i = i + 2) {
+          if (moment(newFromDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1]) || moment(newToDate).isBetween(alreadyReserved[i], alreadyReserved[i + 1])) {
+            clash = true;
+          }
+        }
+      }
+      console.log('POST COMPARISON', clash)
+      if (clash) {
+        callback(null, 'clash');
+      } else {
+        var queryStr = `UPDATE listings SET reserved_dates = reserved_dates || '{${newFromDate}, ${newToDate}}' WHERE id = ${listingId}`;
+        client.query(queryStr, (err, res) => {
+          if (err) {
+            callback(err, null);
+          } else {
+            callback(null, res);
+          }
+        });
+      } 
+
+    }
+  })
+
+  
 }
 
 let saveListing = function(params, callback) {
@@ -180,14 +214,14 @@ let saveListing = function(params, callback) {
   // expects params to be an obj with the required params
   // console.log(params);
   var queryStr = `INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
- 	guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES ('${params.images}')`
+  guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES ('${params.images}')`
   // var queryStr = `INSERT INTO listings VALUES (${results.name}, ${results.price}, ${results.images}, ${results.summary}, ${results.street}, ${results.city})`
   // client.query(queryStr, (err, res) => {
-  // 	if (err) {
-  // 	  callback(err, null);
-  // 	} else {
+  //  if (err) {
+  //    callback(err, null);
+  //  } else {
   //     callback(null, res);
-  // 	}
+  //  }
   // });
 }
 
@@ -260,6 +294,7 @@ module.exports.registerUser = registerUser;
 module.exports.pool = pool;
 module.exports.findUser = findUser;
 module.exports.getUserProfile = getUserProfile;
+module.exports.updateReservedDates = updateReservedDates;
 
 
 

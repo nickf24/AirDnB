@@ -1,29 +1,100 @@
 import React from 'react';
+import Calendar from './Calendar.jsx';
+const axios = require('axios');
 
-let Reservations = ({listing}) => {
+class Reservations extends React.Component {
 
-	return (
+  constructor(props) {
+  	super(props);
+  	this.buttonClickFn = this.buttonClickFn.bind(this);
+  	this.state = {
+  	  from: undefined,
+  	  to: undefined,
+  	  clash: 'neither'
+  	}
+  } 
+
+  sendBookingRequest(fromDate, toDate) {
+  	// console.log(fromDate, toDate);
+  	this.setState({
+  		from: fromDate,
+  		to: toDate
+  	})
+  }
+
+  buttonClickFn(fromDate, toDate) {
+  	var fromDate = fromDate.toString();
+  	fromDate = fromDate.split('GMT')[0];
+  	fromDate = fromDate.slice(0, fromDate.length - 1);
+  	var toDate = toDate.toString();
+  	toDate = toDate.split('GMT')[0];
+  	toDate = toDate.slice(0, toDate.length - 1);
+  	var id = this.props.listing.id;
+  	
+  	axios.post('/dates', {fromDate: fromDate, toDate: toDate, id: id}).then((response) => {
+  	  console.log(response);
+  	  console.log(response.data)
+  	  if (response.data === 'clash') {
+  	  	// render a 'sorry, we could not book for these dates'
+  	  	this.setState((prevState) => {
+  	  		return {
+  	  			from: prevState.from,
+  	  			to: prevState.to,
+  	  			clash: true
+  	  		}
+  	  	})
+  	  } 
+  	  if (response.data === 'booked') {
+  	  	this.setState((prevState) => {
+	  	  return {
+	  	    from: prevState.from,
+	  		to: prevState.to,
+	  		clash: 'nope'
+	  	  }
+  	  	})
+  	  }
+  	}).catch((error) => {
+  	  console.error(error);
+  	})
+
+  }
+
+  render() {
+  	var clashMessage = null;
+  	if (this.state.clash === true) {
+  	  clashMessage = <div> Sorry, these dates are unavailable </div>
+  	}
+
+  	if (this.state.clash === 'nope') {
+  	  clashMessage = <div> Consider it done! </div>
+  	}
+
+  	return (
 
 		<div className="card sticky-top zAxis">
 			 <div className="card-header">
-				<h4 className="text-center">${listing.price} USD</h4>
+				<h4 className="text-center">${this.props.listing.price} USD</h4>
 			</div>
 			<br />
 
-		  	<div className="jumbotron"> 
-		  	</div>
-
+			<div> {clashMessage} </div>
 		  	<div className="card-body">
-				<input className="form-control" type="text" placeholder="Check In"/>
+
+				<Calendar changeFn = {this.sendBookingRequest.bind(this)} />
 				<br />
-				<input className="form-control" type="text" placeholder="Check Out"/>
-				<br />
-				<a href='#'><button type="button" className="btn btn-danger btn-lg btn-block">REQUEST A BOOKING</button></a>
+				<button type="button" className="btn btn-danger btn-lg btn-block" onClick = {() => this.buttonClickFn(this.state.from, this.state.to)}>REQUEST A BOOKING</button>
 		  	</div>
 
-				<div className="card-footer text-center">Rating: {listing.rating.map((star) => <i className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)}</div>
+				<div className="card-footer text-center">Rating: {this.props.listing.rating.map((star) => <i className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)}</div>
 		</div>
-	)
+
+
+
+  		)
+  }
+
+
+
 }
 
 export default Reservations;

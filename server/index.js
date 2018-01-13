@@ -154,6 +154,26 @@ app.post('/listings', (req, res) => {
 
 });
 
+app.post('/dates', (req, res) => {
+  // console.log(req.body);
+  let fromDate = req.body.fromDate;
+  let toDate = req.body.toDate;
+  let id = req.body.id;
+  db.updateReservedDates(id, fromDate, toDate, (error, result) => {
+    if (error) {
+      console.error(error);
+    } else {
+      if (result === 'clash') {
+        res.send('clash')
+      } else {
+        res.send('booked');
+      }
+    }
+  })
+  // res.send('got request!');
+  // db.updateReservedDates
+
+});
 
 //// USER SERIALIZATION PROCESS ////
 passport.serializeUser(function(user_id, done) {
