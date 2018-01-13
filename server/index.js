@@ -86,7 +86,7 @@ app.post('/login', (req, res) => {
 app.get('/logout', (req, res) => {
   req.logout();
   req.session.destroy();
-  res.send(200).end();
+  res.status(200).end();
 })
 
 app.post('/registration', (req, res) => {
@@ -134,6 +134,17 @@ app.get('/authenticate', (req, res) => {
     res.status(200).json({loggedin: true});
   } else {
     res.status(200).json({loggedin: false});
+  }
+})
+
+app.get('/profile', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).end();
+  } else {
+    db.getUserProfile(req.user, (error, result) => {
+      console.log(result);
+      res.status(200).json(result.rows[0]);
+    })
   }
 })
 

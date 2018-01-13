@@ -13,6 +13,7 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: this.props.user,
       listings: []
     }
   }
@@ -40,7 +41,7 @@ class UserProfile extends React.Component {
               <div className="card">
                 <img src="http://cvl-demos.cs.nott.ac.uk/vrn/queue/59b4192763dd4.jpg" className="card-img-top rounded-circle border border-dark float-left" />
                 <div className="card-body">
-                  <h5 className="card-title">Sam's Profile</h5>
+                  <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
                   <p className="card-text"> Email Address </p>
                   <p className="card-text"> Phone Number </p>
                   <p className="card-text"> Contact </p>
