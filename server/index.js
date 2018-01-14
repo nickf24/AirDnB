@@ -169,8 +169,15 @@ app.patch('/profile', (req, res) => {
     for (var i = 0; i < req.body.fields.length; i++) {
       toUpdate.push(req.body[req.body.fields[i]]);
     }
+
+    var id;
+    if (typeof req.user === 'number') {
+      id = req.user;
+    } else if (typeof req.user === 'object') {
+      id = req.user.userid;
+    }
     
-    db.updateUserProfile([req.user, req.body.fields, toUpdate], (error, result) => {
+    db.updateUserProfile([id, req.body.fields, toUpdate], (error, result) => {
       if (error) { console.error(error) }
       else {
         console.log(result);
