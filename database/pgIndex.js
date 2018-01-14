@@ -35,7 +35,7 @@ const client = new Client({
 //
 client.connect();
 
-// client.query('DROP TABLE IF EXISTS reservations');
+// client.query('DROP TABLE IF EXISTS users');
 let createUsers = `CREATE TABLE IF NOT EXISTS users (
   id SERIAL,
   username TEXT UNIQUE,
@@ -205,7 +205,7 @@ let updateReservedDates = function(userId, listingId, newFromDate, newToDate, ca
           } else {
             // update reservations TABLE with a new reservation, listingId/userId
             var nestedQuery1 = `INSERT INTO reservations(user_id, listing_id, days_reserved) VALUES (${userId}, ${listingId}, '{${newFromDate}, ${newToDate}}')`
-            // console.log('NESTED QUERY IS', nestedQuery1)
+            console.log('NESTED QUERY IS', nestedQuery1)
             client.query(nestedQuery1, (err, res) => {
               if (err) {
                 callback(err, null);
@@ -230,9 +230,9 @@ let saveListing = function(params, callback) {
   console.log('PARAMS ARE', params);
 
   var queryStr = `INSERT INTO listings (images, street, state, city, price, listingTitle, typehome, bedrooms, bathrooms,
-  guests, description, cancellations, rating) VALUES ('{${params.mainurl}, ${params.secondaryurl}}', 
+  guests, description, cancellations) VALUES ('{${params.mainurl}, ${params.secondaryurl}}', 
   '${params.address}', '${params.state}', '${params.city.toUpperCase()}', ${params.price}, '${params.mainTitle}', '${params.typeOfHome}', ${params.bedrooms}, ${params.bathrooms}, 
-  ${params.guests}, '${params.description}', '${params.cancellations}', '{'3'}')`
+  ${params.guests}, '${params.description}', '${params.cancellations}')`
   //
   console.log('QUERY STRING IS', queryStr);
   client.query(queryStr, (err, res) => {
@@ -302,7 +302,7 @@ let findUser = (username, callback) => {
 }
 
 let getUserProfile = (user, callback) => {
-  var queryStr = `SELECT id, username, email, phone FROM users WHERE id=${user.userid}`;
+  var queryStr = `SELECT (id, username, email, phone) FROM users WHERE id=${user.userid}`;
   
   client.query(queryStr, (error, result, fields) => {
     if (error) {

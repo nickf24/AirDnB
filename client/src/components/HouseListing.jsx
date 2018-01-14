@@ -23,7 +23,7 @@ class HouseListing extends React.Component {
     
     var ratings = null;
     if (this.props.house.rating !== null) {
-      ratings = <span id="inlineBlock">{this.props.house.rating.map((star) => <i key={index} className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)} {numberOfRatings}</span>
+      ratings = <span id="inlineBlock">{this.props.house.rating.map((star, index) => <i key={index} className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)} {numberOfRatings}</span>
     }
     
   	return (

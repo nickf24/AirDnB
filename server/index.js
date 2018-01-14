@@ -55,6 +55,7 @@ app.use(expressValidator());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // 
+//
 
 
 app.get('/', (req, res) => {
@@ -141,7 +142,7 @@ app.get('/profile', (req, res) => {
   if (!req.isAuthenticated()) {
     res.status(401).end();
   } else {
-    console.log('inside profile get')
+    console.log('LOOK AT MEEEEEEEEEEEEEEEEEEEEE', req.user)
     db.getUserProfile(req.user, (error, result) => {
       if (error) {
         console.error(error);
@@ -163,7 +164,7 @@ app.patch('/profile', (req, res) => {
       toUpdate.push(req.body[req.body.fields[i]]);
     }
     
-    db.updateUserProfile([req.user.userid, req.body.fields, toUpdate], (error, result) => {
+    db.updateUserProfile([req.user, req.body.fields, toUpdate], (error, result) => {
       if (error) { console.error(error) }
       else {
         console.log(result);
@@ -175,7 +176,8 @@ app.patch('/profile', (req, res) => {
 
 app.get('/reservations', (req, res) => {
   // default post
-  let userId = req.user;
+  let userId = req.user.userid;
+
   db.getReservationsByUser(userId, (err, result) => {
     if (err) {
       console.log(err);
@@ -192,7 +194,7 @@ app.post('/dates', (req, res) => {
   let fromDate = req.body.fromDate;
   let toDate = req.body.toDate;
   let id = req.body.id;
-  let userId = req.user;
+  let userId = req.user.userid;
   if (!req.isAuthenticated()) {
     res.send('not logged in');
   } else {

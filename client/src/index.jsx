@@ -130,7 +130,9 @@ class App extends React.Component {
     } else if (this.state.currentView === 'registrationView') {
       return <Registration handleRegistrationSubmit={ this.handleRegistrationSubmit.bind(this) } />
     } else if (this.state.currentView === 'profileView') {
-      return <UserProfile user={ this.state.currentUser } redirect={ this.handleNavChange.bind(this) } />
+      return <UserProfile user={ this.state.currentUser } handleListingClick = {this.handleListingClick.bind(this)} redirect={ this.handleNavChange.bind(this)  } />
+    } else if (this.state.currentView === 'listingFormView') {
+      return <ListingForm />
     }
   }
 

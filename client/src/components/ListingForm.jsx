@@ -8,14 +8,14 @@ class ListingForm extends React.Component {
     super(props);
     this.state = {
                     mainTitle: '',
-                    price: null,
+                    price: 0,
                     address: '',
                     city: '',
                     state: '',
                     typeofhome: 'Private Home',
-                    guests: null,
-                    bedrooms: null,
-                    bathrooms: null,
+                    guests: 1,
+                    bedrooms: 1,
+                    bathrooms: 1,
                     description: '',
                     houserules:'',
                     cancellations: '',
@@ -27,9 +27,9 @@ class ListingForm extends React.Component {
   handleInput(property, int, e) {
     var input = e.target.value
 
-    if (int) {
-      input = parseInt(input);
-    }
+    // if (int) {
+    //   input = parseInt(input);
+    // }
 
     this.setState({
       [property]: input
@@ -40,9 +40,9 @@ class ListingForm extends React.Component {
     // send a post request to the server
     var instance = this;
     var formObj = {
-      mainTitle: instance.state.mainTitle, price: instance.state.price, city: instance.state.city, state: instance.state.state, address: instance.state.address,
+      mainTitle: instance.state.mainTitle.replace(/'/g, "''"), price: instance.state.price, city: instance.state.city.replace(/'/g, "''"), state: instance.state.state.replace(/'/g, "''"), address: instance.state.address.replace(/'/g, "''"),
       typeOfHome: instance.state.typeofhome, guests: instance.state.guests, bedrooms: instance.state.bedrooms, bathrooms: instance.state.bathrooms,
-      description: instance.state.description, houserules: instance.state.houserules, cancellations: instance.state.cancellations, 
+      description: instance.state.description.replace(/'/g, "''"), houserules: instance.state.houserules, cancellations: instance.state.cancellations.replace(/'/g, "''"), 
       mainurl: instance.state.mainurl, secondaryurl: instance.state.secondaryurl 
     }
       // STEP ONE: MAKE THE OBJECT YOU WANT TO ADD TO THE DATABASE - THAT IS formObj
@@ -58,10 +58,6 @@ class ListingForm extends React.Component {
   }
 
   render() {
-
-    // console.log(this.state.mainTitle, this.state.price, this.state.address, this.state.city, this.state.state, 
-    //   this.state.typeofhome, this.state.guests, this.state.bedrooms, this.state.bathrooms, this.state.description, this.state.houserules,
-    //   this.state.cancellations, this.state.mainurl, this.state.secondaryurl);
 
     return (
 
@@ -145,26 +141,26 @@ class ListingForm extends React.Component {
         {/*************** Descriptions House Rules and Cancellations************/}
           <div className="col-md-4 formPush">
             <label htmlFor="comment">Description:</label>
-            <textarea class="form-control" rows="4" value={this.state.description} onChange={this.handleInput.bind(this, 'description', false)}></textarea>
+            <textarea className="form-control" rows="4" value={this.state.description} onChange={this.handleInput.bind(this, 'description', false)}></textarea>
           </div>
 
           <div className="col-md-4 formPush">
             <label htmlFor="comment">House Rules:</label>
-            <textarea class="form-control" rows="4" value={this.state.houserules} onChange={this.handleInput.bind(this, 'houserules', false)}></textarea>
+            <textarea className="form-control" rows="4" value={this.state.houserules} onChange={this.handleInput.bind(this, 'houserules', false)}></textarea>
           </div>
 
           <div className="col-md-4 formPush">
             <label htmlFor="comment">Cancellation:</label>
-            <textarea class="form-control" rows="4" value={this.state.cancellations} onChange={this.handleInput.bind(this, 'cancellations', false)}></textarea>
+            <textarea className="form-control" rows="4" value={this.state.cancellations} onChange={this.handleInput.bind(this, 'cancellations', false)}></textarea>
           </div>
   
         {/*************** URLs ************/}
           <div className="col-md-6 marginPush">
-             Main URL: <input type="text" className="form-control" value={this.state.mainurl} onChange={this.handleInput.bind(this, 'mainurl', false)} placeholder="ex. https://imgur.com/airdnb"/>
+             Main URL: <input type="text" className="form-control" value={this.state.mainurl} onChange={this.handleInput.bind(this, 'mainurl', false)} placeholder="ex. https://imgur.com/airdnb" required/>
           </div>
 
           <div className="col-md-6 marginPush">
-             Main URL: <input type="text" className="form-control" value={this.state.secondaryurl} onChange={this.handleInput.bind(this,'secondaryurl', false)}placeholder="https://imgur.com/airdnb2"/>
+             Main URL: <input type="text" className="form-control" value={this.state.secondaryurl} onChange={this.handleInput.bind(this,'secondaryurl', false)}placeholder="https://imgur.com/airdnb2" required/>
           </div>
 
          <button type="button" className="btn btn-outline-danger btn-block" onClick={() => this.addListing()}>Register with Airdnb</button> 
