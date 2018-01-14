@@ -1,5 +1,7 @@
 import React from 'react';
 
+const axios = require('axios');
+
 class ListingForm extends React.Component {
 
   constructor(props) {
@@ -34,15 +36,32 @@ class ListingForm extends React.Component {
     })
   }
 
-  addListing(){
-    
+  addListing() {
+    // send a post request to the server
+    var instance = this;
+    var formObj = {
+      mainTitle: instance.state.mainTitle, price: instance.state.price, city: instance.state.city, state: instance.state.state, address: instance.state.address,
+      typeOfHome: instance.state.typeofhome, guests: instance.state.guests, bedrooms: instance.state.bedrooms, bathrooms: instance.state.bathrooms,
+      description: instance.state.description, houserules: instance.state.houserules, cancellations: instance.state.cancellations, 
+      mainurl: instance.state.mainurl, secondaryurl: instance.state.secondaryurl 
+    }
+      // STEP ONE: MAKE THE OBJECT YOU WANT TO ADD TO THE DATABASE - THAT IS formObj
+      // CREATE A POST REQUEST FROM THE CLIENT
+      // THE GOAL IS TO PASS formObj from the CLIENT -> SERVER -> DATABASE (where it will be added to the database)
+      // Then we're sending responses back down from the DB to confrim we have inserted it
+      axios.post('/listings', formObj).then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      })
+
   }
 
   render() {
 
-    console.log(this.state.mainTitle, this.state.price, this.state.address, this.state.city, this.state.state, 
-      this.state.typeofhome, this.state.guests, this.state.bedrooms, this.state.bathrooms, this.state.description, this.state.houserules,
-      this.state.cancellations, this.state.mainurl, this.state.secondaryurl);
+    // console.log(this.state.mainTitle, this.state.price, this.state.address, this.state.city, this.state.state, 
+    //   this.state.typeofhome, this.state.guests, this.state.bedrooms, this.state.bathrooms, this.state.description, this.state.houserules,
+    //   this.state.cancellations, this.state.mainurl, this.state.secondaryurl);
 
     return (
 
@@ -148,7 +167,7 @@ class ListingForm extends React.Component {
              Main URL: <input type="text" className="form-control" value={this.state.secondaryurl} onChange={this.handleInput.bind(this,'secondaryurl', false)}placeholder="https://imgur.com/airdnb2"/>
           </div>
 
-         <button type="button" className="btn btn-outline-danger btn-block" onClick={this.addListing.bind(this)}>Register with Airdnb</button> 
+         <button type="button" className="btn btn-outline-danger btn-block" onClick={() => this.addListing()}>Register with Airdnb</button> 
         </div>
       </div>
     )

@@ -72,7 +72,7 @@ class App extends React.Component {
     var app = this;
     axios.post('/registration', account)
       .then(response => {
-        console.log(response);
+        // console.log(response);
         app.setState({
           currentView: 'homeView',
           isLoggedIn: true
@@ -82,6 +82,12 @@ class App extends React.Component {
         console.log(error);
       })
   }
+
+  handleHostListingClick() {
+    this.setState({
+      currentView: 'listingFormView'
+    })
+  } 
 
   handleListingClick(listing) {
     this.setState({
@@ -100,7 +106,7 @@ class App extends React.Component {
     var app = this;
     axios.get('/profile')
       .then(response => {
-        console.log('this response', response);
+
         app.setState({
           currentView: 'profileView',
           currentUser: response.data
@@ -137,11 +143,11 @@ class App extends React.Component {
             <Navbar isLoggedIn={ this.state.isLoggedIn } 
                     handleNavChange={ this.handleNavChange.bind(this) }
                     handleLogout={ this.handleLogout.bind(this) } 
-                    handleProfileView={ this.handleProfileView.bind(this) } />
+                    handleProfileView={ this.handleProfileView.bind(this) } 
+                    handleHostListing = {this.handleHostListingClick.bind(this)} />
           </header>
           <div>
               {this.switchViews()}
-              <ListingForm />
           </div>
 
         </div>

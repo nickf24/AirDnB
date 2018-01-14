@@ -165,6 +165,8 @@ let getAllListings = function(callback) {
 
 let getListingsByCity = function(city, callback) {
   var queryStr = `SELECT * FROM listings WHERE city LIKE '${city.toUpperCase()}'`
+  // console.log('here');
+  console.log(queryStr);
   client.query(queryStr, (err, res) => {
     if (err) {
       callback(err, null);
@@ -203,7 +205,7 @@ let updateReservedDates = function(userId, listingId, newFromDate, newToDate, ca
           } else {
             // update reservations TABLE with a new reservation, listingId/userId
             var nestedQuery1 = `INSERT INTO reservations(user_id, listing_id, days_reserved) VALUES (${userId}, ${listingId}, '{${newFromDate}, ${newToDate}}')`
-            console.log('NESTED QUERY IS', nestedQuery1)
+            // console.log('NESTED QUERY IS', nestedQuery1)
             client.query(nestedQuery1, (err, res) => {
               if (err) {
                 callback(err, null);
@@ -225,17 +227,21 @@ let updateReservedDates = function(userId, listingId, newFromDate, newToDate, ca
 let saveListing = function(params, callback) {
   // saves a new listing to the DB
   // expects params to be an obj with the required params
-  // console.log(params);
-  var queryStr = `INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
-  guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES ('${params.images}')`
-  // var queryStr = `INSERT INTO listings VALUES (${results.name}, ${results.price}, ${results.images}, ${results.summary}, ${results.street}, ${results.city})`
-  // client.query(queryStr, (err, res) => {
-  //  if (err) {
-  //    callback(err, null);
-  //  } else {
-  //     callback(null, res);
-  //  }
-  // });
+  console.log('PARAMS ARE', params);
+
+  var queryStr = `INSERT INTO listings (images, street, state, city, price, listingTitle, typehome, bedrooms, bathrooms,
+  guests, description, cancellations, rating) VALUES ('{${params.mainurl}, ${params.secondaryurl}}', 
+  '${params.address}', '${params.state}', '${params.city.toUpperCase()}', ${params.price}, '${params.mainTitle}', '${params.typeOfHome}', ${params.bedrooms}, ${params.bathrooms}, 
+  ${params.guests}, '${params.description}', '${params.cancellations}', '{'3'}')`
+  //
+  console.log('QUERY STRING IS', queryStr);
+  client.query(queryStr, (err, res) => {
+   if (err) {
+     callback(err, null);
+   } else {
+     callback(null, res);
+   }
+  });
 }
 
 let getReservationsByUser = function(userId, callback) {

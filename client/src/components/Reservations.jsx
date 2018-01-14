@@ -81,6 +81,11 @@ class Reservations extends React.Component {
       clashMessage = <div> You must be logged in to request a booking! </div>
     }
 
+    var ratings = null;
+    if (this.props.listing.rating !== null) {
+      ratings = <span id="inlineBlock">{this.props.listing.rating.map((star) => <i className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)} {numberOfRatings}</span>
+    }
+
   	return (
 
 		<div className="card sticky-top zAxis">
@@ -96,8 +101,7 @@ class Reservations extends React.Component {
 				<br />
 				<button type="button" className="btn btn-danger btn-lg btn-block" onClick = {() => this.buttonClickFn(this.state.from, this.state.to)}>REQUEST A BOOKING</button>
 		  	</div>
-
-				<div className="card-footer text-center">Rating: {this.props.listing.rating.map((star) => <i className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)}</div>
+        {ratings}
 		</div>
 
 

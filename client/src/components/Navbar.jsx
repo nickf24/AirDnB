@@ -50,7 +50,7 @@ class Navbar extends React.Component {
                       onClick={ this.props.handleNavChange.bind(null, 'homeView') }
                       > Home</button>
               <button className="btn btn-outline-danger navButtonLeft" 
-                      type="button" 
+                      type="button" onClick = {() => this.props.handleHostListing()}
                       > Host Listing</button>
               </span>
                 { this.isLoggedIn() }

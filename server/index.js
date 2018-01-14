@@ -54,6 +54,7 @@ app.use(parser.json());
 app.use(expressValidator());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+// 
 
 
 app.get('/', (req, res) => {
@@ -210,6 +211,21 @@ app.post('/dates', (req, res) => {
   // res.send('got request!');
   // db.updateReservedDates
 
+});
+
+app.post('/listings', (req, res) => {
+  // tell the database to add a listing to the listings DB 
+  // send a response which confirms that to the user 
+  // console.log(req.body);
+  // invoke our save to DB function
+  db.saveListing(req.body, (error, result) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.send(result);
+    }
+  });
+  // res.send(req.body);
 });
 
 //// USER SERIALIZATION PROCESS ////
