@@ -4,11 +4,12 @@ let Reviews = ({listing}) => {
 	// console.log(listing);
 	let comments = listing.description;
 	// console.log(JSON.parse(listing.description));
+
 	let image = null;
 	let body = null;
-	if (comments) {
-	  image = <img width={100} height={65} mode={'fit'} src={comments.imageURL}/>
-	  body = <h6>" {comments.body} "</h6>
+	if (listing) {
+	  image = <img width={100} height={65} mode={'fit'} src={listing.comments[0].imageURL}/>
+	  body = <h6>" {listing.description} "</h6>
 	}
 	return (
 			<div className="cleanBorder row marginPush">
