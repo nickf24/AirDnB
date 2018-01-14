@@ -15,7 +15,6 @@ class Reservations extends React.Component {
   } 
 
   sendBookingRequest(fromDate, toDate) {
-  	// console.log(fromDate, toDate);
   	this.setState({
   		from: fromDate,
   		to: toDate
