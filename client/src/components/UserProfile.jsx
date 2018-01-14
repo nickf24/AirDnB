@@ -136,32 +136,43 @@ class UserProfile extends React.Component {
 
     return (
       <div>
-        {console.log('profile', this.state.user)}
-        {console.log('id', this.state.id)}
-        <div className="container-fluid">
-          <div className="row UserProfile">
+        <div className="container-fluid" id="marginTopPush">
+          <div className="row .row-eq-height > col-12">
             <div className="col-md-4"> 
               <div className="card">
-                <img src="http://cvl-demos.cs.nott.ac.uk/vrn/queue/59b4192763dd4.jpg" className="card-img-top rounded-circle border border-dark float-left" />
-                { this.switchContactView() }
+                <div className="border" id="formPadding">
+                  <img src="http://cvl-demos.cs.nott.ac.uk/vrn/queue/59b4192763dd4.jpg" className="img-responsive card-img-top rounded-circle float-left"/>
+                </div>
+                <div className="card-body">
+                  <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
+                  <p className="card-text"> Email Address </p>
+                  <p className="card-text"> Phone Number </p>
+                  <p className="card-text"> Contact </p>
+                  <a href="#" className="btn btn-danger"> Add Verifications </a>
+                </div>
             </div>
-            <div className="card UserProfile">
+            <div className="card">
               <div className="card-header">
                 About Me
               </div>
                 <div className="card-body">
                   <h5 className="card-title">User</h5>
                   <p className="card-text">PPHSHHSHTHTHHTT</p>
-                  <a href="#" className="btn btn-primary">Add more about me</a>
+                  <a href="#" className="btn btn-danger">Add more about me</a>
                 </div>
               </div>
             </div>
           <div className="col-md-8">
-            <p className="userGreeting"> Welcome to your profile! </p>
-            <p>San Fransisco, CA. Joined 12/4/2014</p>
-            <button type="button" className="btn btn-primary">Edit Profile</button>
-            <h3> Upcoming Trips </h3>
-            {this.state.listings.map((listing, index) => <ReservationListing handleClick = {this.props.handleListingClick} key = {index} house = {listing} />)}
+            <div className="cleanBorder">
+              <h3> Welcome to your profile! </h3>
+              <p>San Francisco, CA. Joined 12/4/2014</p>
+              <button type="button" className="btn btn-danger">Edit Profile</button>
+              <br />
+              <hr></hr>
+              <h3> Upcoming Trips </h3>
+              <hr></hr>
+              {this.state.listings.map((listing) => <ReservationListing house = {listing} />)}
+            </div>
           </div>
         </div>
           <Footer />

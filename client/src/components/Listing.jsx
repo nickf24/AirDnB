@@ -3,7 +3,8 @@ import Reservations from './Reservations.jsx';
 import DescriptionIcons from './DescriptionIcons.jsx';
 import Amenities from './Amenities.jsx';
 import Reviews from './Reviews.jsx';
-import GoogleMap from './Map.jsx'
+import GoogleMap from './Map.jsx';
+import ListingForm from './ListingForm.jsx';
 
 class Listing extends React.Component {
 
@@ -81,24 +82,18 @@ class Listing extends React.Component {
 			<br />
 			{/************Reviews View**********/}
 			<div className="container-fluid cleanBorder">
-				<div className="row">
-					<div className="col-4">
+				<div className="row .row-eq-height > col-12">
+					<div className="col-6">
 						<GoogleMap city={this.props.listing.city} State={this.props.listing.state} />
 					</div>
-					<div className="col-2"></div>
+
 					<div className="col-6">
-				<h1 className="display-4 text-center">
-					Reviews
-				</h1>
-				<br />
-					<Reviews listing={this.props.listing}/>
-					<Reviews listing={this.props.listing}/>
-					<Reviews listing={this.props.listing}/>
+						<Reviews listing={this.props.listing}/>
+						<Reviews listing={this.props.listing}/>
+						<Reviews listing={this.props.listing}/>
 					</div>
 				</div>
 			</div>
-
-		
 	</div>
  	)
   }

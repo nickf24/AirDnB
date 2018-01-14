@@ -20,10 +20,10 @@ class GoogleMap extends React.Component {
     console.log('listing props, ', this.props.listings)
   	return (
 
-            <div id="formPadding">
+            <div className='cleanBorder' id="formPadding">
               <iframe  
-                width="600"
-                height="450"
+                width="100%"
+                height="400"
                 frameBorder="2"
                 src={`https://www.google.com/maps/embed/v1/place?key=${maps_API_KEY}&q=${this.props.city}+${this.props.State}`} 
                 ></iframe>

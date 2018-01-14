@@ -23,7 +23,8 @@ class Footer extends React.Component {
 render(){
   // 
 	return(
- <div className="container-fluid border UserProfile">
+ <div className="container-fluid">
+      <hr></hr>
           <div className="row"> 
             <div className="col-md-3">
               <div className="card-body">
