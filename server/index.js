@@ -151,6 +151,25 @@ app.get('/profile', (req, res) => {
   }
 })
 
+app.patch('/profile', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).end();
+  } else {
+    console.log('trying to patch: ', req.body);
+    var toUpdate = [];
+    for (var i = 0; i < req.body.fields.length; i++) {
+      toUpdate.push(req.body[req.body.fields[i]]);
+    }
+    
+    db.updateUserProfile([req.user.userid, req.body.fields, toUpdate], (error, result) => {
+      if (error) { console.error(error) }
+      else {
+        console.log(result);
+      }
+    });
+  }
+})
+
 
 app.get('/reservations', (req, res) => {
   // default post

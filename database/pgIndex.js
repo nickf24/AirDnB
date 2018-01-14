@@ -40,7 +40,7 @@ let createUsers = `CREATE TABLE IF NOT EXISTS users (
   id SERIAL,
   username TEXT UNIQUE,
   password TEXT,
-  email TEXT UNIQUE,
+  email TEXT,
   phone TEXT,
   PRIMARY KEY (id)
 )`
@@ -307,6 +307,38 @@ let getUserProfile = (user, callback) => {
   })
 }
 
+let updateUserProfile = (data, callback) => {
+  // var queryStr = `UPDATE users SET (${data[1]}) = ($3) WHERE users.id = $1`;
+
+  var columns = '(';
+  var values = '(';
+  for (var i = 0; i < data[1].length; i++) {
+    columns += `${data[1][i]}`;
+    values += `'${data[2][i]}'`;
+
+    if (i === data[1].length - 1) {
+      columns += ')';
+      values += ')';
+    } else {
+      columns += ', ';
+      values += ', ';
+    }
+  }
+
+  var queryStr = `UPDATE users SET ${columns} = ${values} WHERE id = ${data[0]}`;
+
+  console.log('query', queryStr)
+
+
+  client.query(queryStr, (error, result, fields) => {
+    if (error) {
+      callback(error, null);
+    } else {
+      callback(null, result);
+    }
+  })
+}
+
 
 
 
@@ -319,6 +351,8 @@ module.exports.findUser = findUser;
 module.exports.getUserProfile = getUserProfile;
 module.exports.updateReservedDates = updateReservedDates;
 module.exports.getReservationsByUser = getReservationsByUser;
+module.exports.updateUserProfile = updateUserProfile;
+
 
 
 // var parse = require('pg-connection-string').parse;

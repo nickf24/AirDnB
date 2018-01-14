@@ -6,6 +6,7 @@ import Navbar from './Navbar.jsx';
 import SearchView from './SearchView.jsx';
 import Footer from './Footer.jsx';
 import ReservationListing from './ReservationListing.jsx';
+import Default from './defaultProfileValues.js';
 
 const axios = require('axios');
 
@@ -15,6 +16,7 @@ class UserProfile extends React.Component {
     super(props);
     this.state = {
       user: this.props.user,
+      contact: [this.props.user.email, this.props.user.phone],
       contactView: 'static',
       listings: []
     }
@@ -37,17 +39,73 @@ class UserProfile extends React.Component {
   handleEmptyInput(property, string) {
     if (this.state.user[property] === null) {
       this.state.user[property] = string;
+    }
+  }
+  componentDidMount () {
+    this.getUserData();
+  }
+
+  getUserData() {
+    var app = this;
+    axios.get('/profile')
+      .then(response => {
+        console.log('getUserData response: ', response);
+        app.setState({
+          user: response.data
+        })
+      })
+      .catch(error => {
+        this.props.redirect('loginView');
+      });
+  }
+
+  patchInfo(info) {
+    var app = this;
+    axios.patch('/profile', info)
+      .then(response => {
+        console.log('patched: ', response);
+      })
+      .catch(error => {
+        console.error(error);
+      })
+  }
+
+  handleUserInput(property, index, event) {
+    var state = this.state[property];
+    state[index] = event.target.value;
+
+    this.setState({ [property]: state })
+  }
+
+  handleEmptyInput(property, index, field) {
+    if (this.state[property][index] === null) {
+      this.state[property][index] = Default[field];
       // this.setState({ user[property]: string });
-      return this.state.user[property];
+      return this.state[property][index];
     } else {
-      return this.state.user[property];
+      return this.state[property][index];
     }
   }
 
-  showEditor(property, view) {
-    this.setState({
-      [property]: view
-    });
+  showEditor(property) {
+    this.setState({ [property]: 'edit' });
+  }
+
+  saveEdit(viewProp, property, fields) {
+    var data = {};
+    for (var i = 0; i < fields.length; i++) {
+      var input = this.state[property][i];
+      if (input === '') {
+        input = null;
+      }
+
+      data[fields[i]] = input;
+    }
+    data.fields = fields
+
+    this.patchInfo(data);    
+
+    this.setState({ [viewProp]: 'static' })
   }
 
   switchContactView() {
@@ -55,9 +113,9 @@ class UserProfile extends React.Component {
       return (
         <div className="card-body">
           <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
-          <p className="card-text"> { this.handleEmptyInput('email', 'Email Address') } </p>
-          <p className="card-text"> { this.handleEmptyInput('phone', 'Phone Number') } </p>
-          <button className="btn btn-primary" onClick={this.showEditor.bind(this, 'contactView', 'edit') } > Add Verifications </button>
+          <p className="card-text"> { this.handleEmptyInput('contact', 0, 'email') } </p>
+          <p className="card-text"> { this.handleEmptyInput('contact', 1, 'phone') } </p>
+          <button className="btn btn-primary" onClick={this.showEditor.bind(this, 'contactView') } > Add Verifications </button>
         </div>
       );
     } else if (this.state.contactView === 'edit') {
@@ -68,15 +126,19 @@ class UserProfile extends React.Component {
             <input className="form-control"
                    type="text"
                    name="email"
-                   value={ this.handleEmptyInput('email', 'Email Address') } />
+                   value={ this.handleEmptyInput('contact', 0, 'email') } 
+                   onChange={ this.handleUserInput.bind(this, 'contact', 0) } />
           </div>
           <div className="form-group">
             <input className="form-control"
                    type="text"
                    name="phone"
-                   value={ this.handleEmptyInput('phone', 'Phone Number') } />
+                   value={ this.handleEmptyInput('contact', 1, 'phone') } 
+                   onChange={ this.handleUserInput.bind(this, 'contact', 1) } />
           </div>
-          <button className="btn btn-primary" onClick={this.showEditor.bind(this, 'contactView', 'static') } > Save Edits </button>
+          <button className="btn btn-primary" 
+                  onClick={this.saveEdit.bind(this, 'contactView', 'contact', ['email', 'phone']) } 
+          > Save Edits </button>
         </div>
       )
     }
@@ -87,6 +149,7 @@ class UserProfile extends React.Component {
     return (
       <div>
         {console.log('profile', this.state.user)}
+        {console.log('id', this.state.id)}
         <div className="container-fluid">
           <div className="row UserProfile">
             <div className="col-md-4"> 
