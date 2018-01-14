@@ -60,7 +60,7 @@ class ListingForm extends React.Component {
   render() {
     return (
 
-      <div className="container cleanBorder">
+      <div className="container" id="marginTopPush">
           <img src="https://www.sevenkeys.cz/wp-content/uploads/2016/10/Superhost.jpg" id="centerImage" className = "img-responsive " width={400} height={200} mode={'fit'}/>
         <div className="row form-group">
 
