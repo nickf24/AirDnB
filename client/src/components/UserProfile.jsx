@@ -161,7 +161,7 @@ class UserProfile extends React.Component {
             <p>San Fransisco, CA. Joined 12/4/2014</p>
             <button type="button" className="btn btn-primary">Edit Profile</button>
             <h3> Upcoming Trips </h3>
-            {this.state.listings.map((listing) => <ReservationListing house = {listing} />)}
+            {this.state.listings.map((listing, index) => <ReservationListing handleClick = {this.props.handleListingClick} key = {index} house = {listing} />)}
           </div>
         </div>
           <Footer />
@@ -172,11 +172,3 @@ class UserProfile extends React.Component {
   }
 }
 export default UserProfile;
-
-{/* <div className="card-body">
-                  <h5 className="card-title">{ this.state.user.username }'s Profile</h5>
-                  <p className="card-text"> Email Address </p>
-                  <p className="card-text"> Phone Number </p>
-                  <p className="card-text"> Contact </p>
-                  <a href="#" className="btn btn-primary"> Add Verifications </a>
-                </div> */}

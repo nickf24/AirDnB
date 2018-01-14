@@ -54,6 +54,8 @@ app.use(parser.json());
 app.use(expressValidator());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+// 
+//
 
 
 app.get('/', (req, res) => {
@@ -140,7 +142,7 @@ app.get('/profile', (req, res) => {
   if (!req.isAuthenticated()) {
     res.status(401).end();
   } else {
-    console.log('inside profile get')
+    console.log('LOOK AT MEEEEEEEEEEEEEEEEEEEEE', req.user)
     db.getUserProfile(req.user, (error, result) => {
       if (error) {
         console.error(error);
@@ -162,7 +164,7 @@ app.patch('/profile', (req, res) => {
       toUpdate.push(req.body[req.body.fields[i]]);
     }
     
-    db.updateUserProfile([req.user.userid, req.body.fields, toUpdate], (error, result) => {
+    db.updateUserProfile([req.user, req.body.fields, toUpdate], (error, result) => {
       if (error) { console.error(error) }
       else {
         console.log(result);
@@ -174,7 +176,8 @@ app.patch('/profile', (req, res) => {
 
 app.get('/reservations', (req, res) => {
   // default post
-  let userId = req.user;
+  let userId = req.user.userid;
+
   db.getReservationsByUser(userId, (err, result) => {
     if (err) {
       console.log(err);
@@ -191,7 +194,7 @@ app.post('/dates', (req, res) => {
   let fromDate = req.body.fromDate;
   let toDate = req.body.toDate;
   let id = req.body.id;
-  let userId = req.user;
+  let userId = req.user.userid;
   if (!req.isAuthenticated()) {
     res.send('not logged in');
   } else {
@@ -210,6 +213,21 @@ app.post('/dates', (req, res) => {
   // res.send('got request!');
   // db.updateReservedDates
 
+});
+
+app.post('/listings', (req, res) => {
+  // tell the database to add a listing to the listings DB 
+  // send a response which confirms that to the user 
+  // console.log(req.body);
+  // invoke our save to DB function
+  db.saveListing(req.body, (error, result) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.send(result);
+    }
+  });
+  // res.send(req.body);
 });
 
 //// USER SERIALIZATION PROCESS ////

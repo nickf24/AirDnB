@@ -5,45 +5,57 @@ import Amenities from './Amenities.jsx';
 import Reviews from './Reviews.jsx';
 import GoogleMap from './Map.jsx'
 
-let Listing = ({ listing }) => {
+class Listing extends React.Component {
+
+	constructor(props) {
+	  super(props);
+	}
+
+
+	render() {
+
+	  var houseRules = null;
+	  if (this.props.listing.house_rules !== null) {
+	  	houseRules = this.props.listing.house_rules.map((rule) => <p>{rule}</p>)
+	  }
 
 	return (
 		<div className="container-fluid">
 		
 			{/************ Top paralax Image URL ************/}
-			<section className="bgimage cleanBorder" style={{backgroundImage: 'url('+listing.images[0]+')'}}></section>
+			<section className="bgimage cleanBorder" style={{backgroundImage: 'url('+this.props.listing.images[0]+')'}}></section>
 			<br />
 
 			<div className="container">
 				<div className="row">
 					<div className="col-md-8 cleanBorder"> 
 						{/************ Quick Summary of Home ************/}
-						<h3 className="display-4">{listing.listingtitle}</h3>
+						<h3 className="display-4">{this.props.listing.listingtitle}</h3>
 						<hr></hr>
 						{/************z Home Description ************/}
-							<h4>{listing.typehome} - {listing.city} - {listing.state}</h4>
+							<h4>{this.props.listing.typehome} - {this.props.listing.city} - {this.props.listing.state}</h4>
 						<br />
 						<br />
 						{/************ Description Icons ************/}
-							<DescriptionIcons listing={listing}/>
+							<DescriptionIcons listing={this.props.listing}/>
 						<br />
 						{/************ Summary Description ***********/}
 						<div className="col-md-12">
-							<p>{listing.description}</p>
+							<p>{this.props.listing.description}</p>
 						</div>
 						<hr></hr>
 						{/************* Amentities ****************/}
 						<h4>Amenities</h4>
 						<br />
 						<br />
-							<Amenities listing={listing}/>
+							<Amenities listing={this.props.listing}/>
 						<hr></hr>
 						{/************* House Rules ****************/}
 						<h4>House Rules</h4>
 						<br />
 							<div className="col-md-12">
 								<br />
-								{listing.house_rules.map((rule) => <p>{rule}</p>)}
+								{houseRules}
 							</div>
 						<hr></hr>
 
@@ -51,7 +63,7 @@ let Listing = ({ listing }) => {
 						<h4>Cancellations</h4>
 						<div className="col-md-12">
 							<br />
-							<p>{listing.cancellations}</p>
+							<p>{this.props.listing.cancellations}</p>
 						</div>
 
 						<hr></hr>
@@ -59,19 +71,19 @@ let Listing = ({ listing }) => {
 
 					{/*****************Reservations Component*****************/}
 					<div className="col-md-4 rightBorder zAxis">
-						<Reservations listing={listing}/>	
+						<Reservations listing={this.props.listing}/>	
 					</div>
 			</div>
 		</div>
 			{/******************Bottom Image*******************/}
 			<br />
-			<section className="bgimage cleanBorder" style={{backgroundImage: 'url('+listing.images[1]+')'}}></section>
+			<section className="bgimage cleanBorder" style={{backgroundImage: 'url('+this.props.listing.images[1]+')'}}></section>
 			<br />
 			{/************Reviews View**********/}
 			<div className="container-fluid cleanBorder">
 				<div className="row">
 					<div className="col-4">
-						<GoogleMap city={listing.city} State={listing.state} />
+						<GoogleMap city={this.props.listing.city} State={this.props.listing.state} />
 					</div>
 					<div className="col-2"></div>
 					<div className="col-6">
@@ -79,17 +91,21 @@ let Listing = ({ listing }) => {
 					Reviews
 				</h1>
 				<br />
-					<Reviews listing={listing}/>
-					<Reviews listing={listing}/>
-					<Reviews listing={listing}/>
+					<Reviews listing={this.props.listing}/>
+					<Reviews listing={this.props.listing}/>
+					<Reviews listing={this.props.listing}/>
 					</div>
 				</div>
 			</div>
 
 		
 	</div>
-	)
-}
+ 	)
+  }
+
+
+
+} 
 
 export default Listing; 
 

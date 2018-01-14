@@ -23,7 +23,7 @@ class ReservationListing extends React.Component {
 
   	return (
       
-			<div> 
+			<div onClick = {() => this.props.handleClick(this.props.house)}> 
 
         <a href="#"><img src = {this.props.house.images[0]} className = "img-responsive rounded img-thumbnail" width={200} height={120} mode={'fit'}/></a>
 

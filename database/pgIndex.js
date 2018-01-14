@@ -35,7 +35,7 @@ const client = new Client({
 //
 client.connect();
 
-// client.query('DROP TABLE IF EXISTS reservations');
+// client.query('DROP TABLE IF EXISTS users');
 let createUsers = `CREATE TABLE IF NOT EXISTS users (
   id SERIAL,
   username TEXT UNIQUE,
@@ -165,6 +165,8 @@ let getAllListings = function(callback) {
 
 let getListingsByCity = function(city, callback) {
   var queryStr = `SELECT * FROM listings WHERE city LIKE '${city.toUpperCase()}'`
+  // console.log('here');
+  console.log(queryStr);
   client.query(queryStr, (err, res) => {
     if (err) {
       callback(err, null);
@@ -225,17 +227,21 @@ let updateReservedDates = function(userId, listingId, newFromDate, newToDate, ca
 let saveListing = function(params, callback) {
   // saves a new listing to the DB
   // expects params to be an obj with the required params
-  // console.log(params);
-  var queryStr = `INSERT INTO listings(images, street, state, city, rating, price, listingTitle, private, typehome, bedrooms, bathrooms,
-  guests, description, wifi, kitchen, parking, pool, gym, cancellations, lat, lon) VALUES ('${params.images}')`
-  // var queryStr = `INSERT INTO listings VALUES (${results.name}, ${results.price}, ${results.images}, ${results.summary}, ${results.street}, ${results.city})`
-  // client.query(queryStr, (err, res) => {
-  //  if (err) {
-  //    callback(err, null);
-  //  } else {
-  //     callback(null, res);
-  //  }
-  // });
+  console.log('PARAMS ARE', params);
+
+  var queryStr = `INSERT INTO listings (images, street, state, city, price, listingTitle, typehome, bedrooms, bathrooms,
+  guests, description, cancellations) VALUES ('{${params.mainurl}, ${params.secondaryurl}}', 
+  '${params.address}', '${params.state}', '${params.city.toUpperCase()}', ${params.price}, '${params.mainTitle}', '${params.typeOfHome}', ${params.bedrooms}, ${params.bathrooms}, 
+  ${params.guests}, '${params.description}', '${params.cancellations}')`
+  //
+  console.log('QUERY STRING IS', queryStr);
+  client.query(queryStr, (err, res) => {
+   if (err) {
+     callback(err, null);
+   } else {
+     callback(null, res);
+   }
+  });
 }
 
 let getReservationsByUser = function(userId, callback) {
@@ -296,7 +302,7 @@ let findUser = (username, callback) => {
 }
 
 let getUserProfile = (user, callback) => {
-  var queryStr = `SELECT id, username, email, phone FROM users WHERE id=${user.userid}`;
+  var queryStr = `SELECT (id, username, email, phone) FROM users WHERE id=${user.userid}`;
   
   client.query(queryStr, (error, result, fields) => {
     if (error) {
