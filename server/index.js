@@ -189,8 +189,13 @@ app.patch('/profile', (req, res) => {
 
 app.get('/reservations', (req, res) => {
   // default post
-  let userId = req.user;
-
+  // let userId = req.user;
+  var userId;
+    if (typeof req.user === 'number') {
+      id = req.user;
+    } else if (typeof req.user === 'object') {
+      id = req.user.userid;
+    }
   db.getReservationsByUser(userId, (err, result) => {
     if (err) {
       console.log(err);
