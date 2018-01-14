@@ -23,6 +23,7 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount() {
+    this.getUserData();
     var instance = this;
 
     axios.get('/reservations').then(function(response) {
@@ -33,16 +34,6 @@ class UserProfile extends React.Component {
     }).catch(function(error) {
       console.log(error)
     })
-
-  }
-
-  handleEmptyInput(property, string) {
-    if (this.state.user[property] === null) {
-      this.state.user[property] = string;
-    }
-  }
-  componentDidMount () {
-    this.getUserData();
   }
 
   getUserData() {
@@ -80,7 +71,6 @@ class UserProfile extends React.Component {
   handleEmptyInput(property, index, field) {
     if (this.state[property][index] === null) {
       this.state[property][index] = Default[field];
-      // this.setState({ user[property]: string });
       return this.state[property][index];
     } else {
       return this.state[property][index];
@@ -98,13 +88,10 @@ class UserProfile extends React.Component {
       if (input === '') {
         input = null;
       }
-
       data[fields[i]] = input;
     }
     data.fields = fields
-
     this.patchInfo(data);    
-
     this.setState({ [viewProp]: 'static' })
   }
 
