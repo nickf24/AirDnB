@@ -41,6 +41,10 @@ class Navbar extends React.Component {
   }
 
   render () {
+    let button = null;
+    if (this.props.isLoggedIn === true) {
+      button = <button className="btn btn-outline-danger navButtonLeft" type="button" onClick = {() => this.props.handleHostListing()}> Create a Listing</button>
+    }
     return (
       <div>
         <nav className="navbar navbar-static-top navBarClean">         
@@ -48,10 +52,8 @@ class Navbar extends React.Component {
               <button className="btn btn-outline-danger" 
                       type="button" 
                       onClick={ this.props.handleNavChange.bind(null, 'homeView') }
-                      > Home</button>
-              <button className="btn btn-outline-danger navButtonLeft" 
-                      type="button" onClick = {() => this.props.handleHostListing()}
-                      > Host Listing</button>
+                      >Home</button>
+                      {button}
               </span>
                 { this.isLoggedIn() }
         </nav> 
