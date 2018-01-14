@@ -34,7 +34,7 @@ class HouseListing extends React.Component {
 
         <p id="price">${this.props.house.price} USD</p>
       
-        <span id="inlineBlock">{this.props.house.rating.map((star) => <i className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)} {numberOfRatings}</span>
+        <span id="inlineBlock">{this.props.house.rating.map((star, index) => <i key={index} className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)} {numberOfRatings}</span>
 
   		</div> 
   	)
