@@ -140,6 +140,7 @@ app.get('/profile', (req, res) => {
   if (!req.isAuthenticated()) {
     res.status(401).end();
   } else {
+    console.log('inside profile get')
     db.getUserProfile(req.user, (error, result) => {
       if (error) {
         console.error(error);

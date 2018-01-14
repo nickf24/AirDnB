@@ -24,6 +24,7 @@ class UserProfile extends React.Component {
 
   componentDidMount() {
     this.getUserData();
+    
     var instance = this;
 
     axios.get('/reservations').then(function(response) {
