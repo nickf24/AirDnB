@@ -84,18 +84,16 @@ class Listing extends React.Component {
 			<div className="container-fluid cleanBorder">
 				<div className="row .row-eq-height > col-12">
 					<div className="col-6">
-						<GoogleMap city={listing.city} State={listing.state} />
+						<GoogleMap city={this.props.listing.city} State={this.props.listing.state} />
 					</div>
 
 					<div className="col-6">
-						<Reviews listing={listing}/>
-						<Reviews listing={listing}/>
-						<Reviews listing={listing}/>
+						<Reviews listing={this.props.listing}/>
+						<Reviews listing={this.props.listing}/>
+						<Reviews listing={this.props.listing}/>
 					</div>
 				</div>
 			</div>
-			<ListingForm />
-		
 	</div>
  	)
   }
