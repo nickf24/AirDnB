@@ -29,4 +29,3 @@ node_modules/
 bower_components/
 
 #API Keys
-server/config/mapsAPI.js
