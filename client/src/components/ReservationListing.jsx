@@ -30,15 +30,21 @@ class ReservationListing extends React.Component {
     //subtract the dates and get that into milliseconds
     var dateToReservation = fromDateObject - Date.parse(isoDate)
     var duration = moment.duration(dateToReservation, 'milliseconds');
+ 
 
-    //adds 0 if its a single digit, if not it stays normal. 
-    var daysTillRes = duration._data.days.toString().length === 1 ? 
+    if(dateToReservation > 0){
+      var daysTillRes = duration._data.days.toString().length === 1 ? 
                       daysTillRes = '0'+duration._data.days.toString() : 
                       daysTillRes = duration._data.days;
 
-    var hoursTillRes = duration._data.hours.toString().length === 1 ? 
+      var hoursTillRes = duration._data.hours.toString().length === 1 ? 
                        hoursTillRes = '0'+duration._data.hours.toString() : 
                        hoursTillRes = duration._data.hours;
+    } else {
+      var daysTillRes = 0;
+      var hoursTillRes = 0;
+    }
+
 
     var date = new Date();
     var year = date.getFullYear();
