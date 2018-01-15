@@ -17,7 +17,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentView: 'homeView',
+      currentView: 'confirmView',
       currentListing: null,
       isLoggedIn: false,
       currentUser: null
@@ -140,7 +140,7 @@ class App extends React.Component {
     } else if (this.state.currentView === 'listingFormView') {
       return <ListingForm handleFormSubmit = {this.handleFormSubmit.bind(this)} />
     } else if (this.state.currentView === 'confirmView') {
-      return <ConfirmView />
+      return <ConfirmView handleProfClick = {this.handleProfileView.bind(this)}/>
     }
   }
 
