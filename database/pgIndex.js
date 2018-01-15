@@ -4,34 +4,34 @@ let authentication = require('../server/authentication/authentication.js');
 let listings = require('../generatedSampleData.js');
 listings = listings.listingsData;
 
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'airdnb',
-//   password: 'password'
-// })
-
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+  user: 'postgres',
+  host: 'localhost',
+  database: 'airdnb',
+  password: 'password'
 })
+
+// const pool = new Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// })
 
 pool.on('error', (err, client) => {
   console.error('Unexpected error on idle client', err)
   process.exit(-1)
 })
 
-// const client = new Client({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'airdnb',
-//   password: 'password'
-// })
-
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true
+  user: 'postgres',
+  host: 'localhost',
+  database: 'airdnb',
+  password: 'password'
 })
+
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true
+// })
 
 client.connect();
 
@@ -76,6 +76,7 @@ let createListings = `CREATE TABLE IF NOT EXISTS listings (
   lat NUMERIC,
   lon NUMERIC,
   comments TEXT ARRAY,
+  ownerId TEXT,
   PRIMARY KEY (id)
 )`
 
@@ -234,9 +235,9 @@ let saveListing = function(params, callback) {
   console.log('PARAMS ARE', params);
 
   var queryStr = `INSERT INTO listings (images, street, state, city, price, listingTitle, typehome, bedrooms, bathrooms,
-  guests, description, cancellations) VALUES ('{${params.mainurl}, ${params.secondaryurl}}', 
+  guests, description, cancellations, ownerId) VALUES ('{${params.mainurl}, ${params.secondaryurl}}', 
   '${params.address}', '${params.state}', '${params.city.toUpperCase()}', ${params.price}, '${params.mainTitle}', '${params.typeOfHome}', ${params.bedrooms}, ${params.bathrooms}, 
-  ${params.guests}, '${params.description}', '${params.cancellations}')`
+  ${params.guests}, '${params.description}', '${params.cancellations}', ${params.userId})`
   //
   console.log('QUERY STRING IS', queryStr);
   client.query(queryStr, (err, res) => {
@@ -255,6 +256,18 @@ let getReservationsByUser = function(userId, callback) {
   // get all listing_id's/dates for reservations currently made by that user
   // return all listing properties/dates for that user 
   let queryStr = `SELECT * from listings WHERE id IN (SELECT listing_id FROM reservations WHERE user_id = ${userId})`;
+  client.query(queryStr, (err, res) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, res);
+    }
+  })
+}
+
+let getPropertiesByUser = function(userId, callback) {
+  console.log('AT DB FUNCTION')
+  let queryStr = `SELECT * FROM listings WHERE id IN (SELECT id FROM listings WHERE ownerId = '${userId}')`;
   client.query(queryStr, (err, res) => {
     if (err) {
       callback(err, null);
@@ -362,7 +375,7 @@ module.exports.getUserProfile = getUserProfile;
 module.exports.updateReservedDates = updateReservedDates;
 module.exports.getReservationsByUser = getReservationsByUser;
 module.exports.updateUserProfile = updateUserProfile;
-
+module.exports.getPropertiesByUser = getPropertiesByUser;
 
 
 // var parse = require('pg-connection-string').parse;

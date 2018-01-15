@@ -1,11 +1,11 @@
 import React from 'react';
-import data2 from '../../../sampleData2.js';
 import HouseListing from './HouseListing.jsx';
 import Search from './Search.jsx';
 import Navbar from './Navbar.jsx';
 import SearchView from './SearchView.jsx';
 import Footer from './Footer.jsx';
 import ReservationListing from './ReservationListing.jsx';
+import PropertyListing from './PropertyListing.jsx';
 import Default from './defaultProfileValues.js';
 
 const axios = require('axios');
@@ -18,7 +18,8 @@ class UserProfile extends React.Component {
       user: this.props.user,
       contact: [this.props.user.email, this.props.user.phone],
       contactView: 'static',
-      listings: []
+      listings: [],
+      properties: []
     }
   }
 
@@ -32,8 +33,20 @@ class UserProfile extends React.Component {
       instance.setState({
         listings: response.data.rows
       })
+
     }).catch(function(error) {
       console.log(error)
+    })
+
+
+    axios.get('/properties').then(function(response) {
+      // console.log('here in preoperties')
+      console.log('PROPERTIES RESPONSE IS', response);
+      instance.setState({
+        properties: response.data.rows
+      })
+    }).catch(function(error) {
+        console.log(error);
     })
   }
 
@@ -168,6 +181,13 @@ class UserProfile extends React.Component {
               <div className="row">
                 {this.state.listings.map((listing, index) => <ReservationListing key = {index} house = {listing} handleClick = {this.props.handleListingClick} />)}
               </div>
+              <hr></hr>
+              <h3> My Listings </h3> 
+              <hr></hr>
+              <div className="row">
+                {this.state.properties.map((listing, index) => <PropertyListing key = {index} house = {listing} handleClick = {this.props.handleListingClick} />)}
+              </div>  
+              
             </div>
           </div>
         </div>

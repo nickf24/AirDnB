@@ -10,6 +10,7 @@ import Navbar from './components/Navbar.jsx';
 import Registration from './components/Registration.jsx';
 import UserProfile from './components/UserProfile.jsx';
 import ListingForm from './components/ListingForm.jsx';
+import ConfirmView from './components/ConfirmView.jsx';
 
 class App extends React.Component {
 
@@ -89,6 +90,12 @@ class App extends React.Component {
     })
   } 
 
+  handleFormSubmit() {
+    this.setState({
+      currentView: 'confirmView'
+    })
+  }
+
   handleListingClick(listing) {
     this.setState({
       currentView: 'listView',
@@ -106,7 +113,6 @@ class App extends React.Component {
     var app = this;
     axios.get('/profile')
       .then(response => {
-
         app.setState({
           currentView: 'profileView',
           currentUser: response.data
@@ -132,7 +138,9 @@ class App extends React.Component {
     } else if (this.state.currentView === 'profileView') {
       return <UserProfile user={ this.state.currentUser } handleListingClick = {this.handleListingClick.bind(this)} redirect={ this.handleNavChange.bind(this)  } />
     } else if (this.state.currentView === 'listingFormView') {
-      return <ListingForm />
+      return <ListingForm handleFormSubmit = {this.handleFormSubmit.bind(this)} />
+    } else if (this.state.currentView === 'confirmView') {
+      return <ConfirmView />
     }
   }
 

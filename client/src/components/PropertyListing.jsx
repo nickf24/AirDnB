@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-class ReservationListing extends React.Component {
+class PropertyListing extends React.Component {
 
   constructor(props) {
   	super(props);
@@ -24,13 +24,6 @@ class ReservationListing extends React.Component {
 
     var isoDate = new Date().toISOString()
     
-
-    var dateToReservation = Math.abs(fromDateObject - Date.parse(isoDate))
-    var duration = moment.duration(dateToReservation, 'milliseconds');
-
-    var daysTillRes = duration._data.days.toString().length === 1 ? daysTillRes = '0'+duration._data.days.toString() : daysTillRes = duration._data.days;
-    var hoursTillRes = duration._data.hours.toString().length === 1 ? hoursTillRes = '0'+duration._data.hours.toString() : hoursTillRes = duration._data.hours;
-
     var date = new Date();
     var year = date.getFullYear();
     if (this.props.house.reserved_dates !== null) {
@@ -56,19 +49,9 @@ class ReservationListing extends React.Component {
               <br />
               {this.props.house.street}
               <br />
-              {this.props.house.city} , {this.props.house.state}
+              {this.props.house.city}  {this.props.house.state}
           </h6>
-          <p id="changeToRed">
-            Start Date : {fromDate}
-            <br />
-            End Date&nbsp;&nbsp; : {toDate}
-          </p>
 
-        </div>
-	      <div className="col-md-2 centerDiv shadowButton reservationTimer">
-        <br />
-          <p className="display-4">{duration._data.days}<h5>&nbsp;days</h5></p>
-          <p className="display-4">{duration._data.hours}<h5>&nbsp;hours</h5></p>
         </div>
   		</div> 
   	)
@@ -76,7 +59,7 @@ class ReservationListing extends React.Component {
 }
 
 
-export default ReservationListing;
+export default PropertyListing;
 
 // 8 to 4 
 
