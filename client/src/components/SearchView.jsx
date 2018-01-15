@@ -51,7 +51,7 @@ class SearchView extends React.Component {
               {noResults}
               </div>
             </div> 
-            <div className="col-md-4">
+            <div className="col-md-4 mapstick">
              <GoogleMap State={State} city={city} listings={this.state.listings} />
             </div>
           </div>

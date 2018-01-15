@@ -71,7 +71,7 @@ class Listing extends React.Component {
 					</div>
 
 					{/*****************Reservations Component*****************/}
-					<div className="col-md-4 rightBorder zAxis">
+					<div className="col-md-4 rightBorder">
 						<Reservations listing={this.props.listing}/>	
 					</div>
 			</div>
