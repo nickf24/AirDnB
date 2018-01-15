@@ -137,8 +137,8 @@ class UserProfile extends React.Component {
     return (
       <div>
         <div className="container-fluid" id="marginTopPush">
-          <div className="row .row-eq-height > col-12">
-            <div className="col-md-4"> 
+          <div className="row">
+            <div className="col-md-3"> 
               <div className="card">
                 <div className="border" id="formPadding">
                   <img src="http://cvl-demos.cs.nott.ac.uk/vrn/queue/59b4192763dd4.jpg" className="img-responsive card-img-top rounded-circle float-left"/>
@@ -156,7 +156,7 @@ class UserProfile extends React.Component {
                 </div>
               </div>
             </div>
-          <div className="col-md-8">
+          <div className="col-md-9">
             <div className="cleanBorder">
               <h3> Welcome to your profile! </h3>
               <p>San Francisco, CA. Joined 12/4/2014</p>
@@ -165,7 +165,9 @@ class UserProfile extends React.Component {
               <hr></hr>
               <h3> Upcoming Trips </h3>
               <hr></hr>
-              {this.state.listings.map((listing, index) => <ReservationListing key = {index} house = {listing} handleClick = {this.props.handleListingClick} />)}
+              <div className="row">
+                {this.state.listings.map((listing, index) => <ReservationListing key = {index} house = {listing} handleClick = {this.props.handleListingClick} />)}
+              </div>
             </div>
           </div>
         </div>

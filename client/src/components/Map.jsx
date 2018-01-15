@@ -23,8 +23,7 @@ class GoogleMap extends React.Component {
             <div className='cleanBorder' id="formPadding">
               <iframe  
                 width="100%"
-                height="400"
-                frameBorder="2"
+                height="500"
                 src={`https://www.google.com/maps/embed/v1/place?key=${maps_API_KEY}&q=${this.props.city}+${this.props.State}`} 
                 ></iframe>
               </div>
