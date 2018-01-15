@@ -25,7 +25,7 @@ class UserProfile extends React.Component {
 
   componentDidMount() {
     this.getUserData();
-    
+  
     var instance = this;
 
     axios.get('/reservations').then(function(response) {
@@ -172,7 +172,7 @@ class UserProfile extends React.Component {
           <div className="col-md-9">
             <div className="cleanBorder">
               <h3> Welcome to your profile! </h3>
-              <p>San Francisco, CA. Joined 12/4/2014</p>
+              <p>San Francisco, CA. Joined 1/12/2018</p>
               <button type="button" className="btn btn-danger">Edit Profile</button>
               <br />
               <hr></hr>

@@ -73,6 +73,12 @@
 	z-index: 998;
 }
 
+.blackLine{
+	top-margin: 1em;
+	bottom-margin: 1em;
+	border-top: 1px solid #8c8b8b;
+}
+
 .mapstick {
 	right: 0px;
 	position: fixed;
