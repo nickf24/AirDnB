@@ -27,10 +27,6 @@ class ListingForm extends React.Component {
   handleInput(property, int, e) {
     var input = e.target.value
 
-    // if (int) {
-    //   input = parseInt(input);
-    // }
-
     this.setState({
       [property]: input
     })
@@ -51,6 +47,10 @@ class ListingForm extends React.Component {
       // Then we're sending responses back down from the DB to confrim we have inserted it
       axios.post('/listings', formObj).then((response) => {
         console.log(response);
+        // switch views to confirm view
+        instance.props.handleFormSubmit();
+
+
       }).catch((error) => {
         console.log(error);
       })

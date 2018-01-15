@@ -163,15 +163,31 @@ app.patch('/profile', (req, res) => {
       toUpdate.push(req.body[req.body.fields[i]]);
     }
     
+
     db.updateUserProfile([req.user, req.body.fields, toUpdate], (error, result) => {
-      if (error) { console.error(error) }
-      else {
+      if (error) { 
+        console.error(error); 
+      } else {
         console.log(result);
       }
     });
   }
 })
 
+app.get('/properties', (req, res) => {
+  console.log('here');
+  let userId = req.user;
+  db.getPropertiesByUser(userId, (err, result) => {
+    if (err) {
+      console.log(err); 
+    } else {
+      console.log('REUSLT FROM /PROPERTIES', result);
+      res.send(result);
+    }
+  })
+  // res.send('hello from /properties')
+
+});
 
 app.get('/reservations', (req, res) => {
   // default post
@@ -219,7 +235,9 @@ app.post('/listings', (req, res) => {
   // send a response which confirms that to the user 
   // console.log(req.body);
   // invoke our save to DB function
-  db.saveListing(req.body, (error, result) => {
+  var insertObj = req.body;
+  insertObj.userId = req.user;
+  db.saveListing(insertObj, (error, result) => {
     if (error) {
       console.log(error);
     } else {

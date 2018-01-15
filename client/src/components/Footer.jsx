@@ -1,6 +1,4 @@
-
 import React from 'react';
-import data2 from '../../../sampleData2.js';
 import HouseListing from './HouseListing.jsx';
 import Search from './Search.jsx';
 import Navbar from './Navbar.jsx';
