@@ -67,6 +67,7 @@ class Registration extends React.Component {
               value={ this.state.passwordMatch }
               onChange={ this.handleInput.bind(this, 'passwordMatch') } />
           </div>
+          { this.props.errors.map((msg, index) => <div key={index} className="alert alert-danger" role="alert" >{msg}</div>) }
           <br />
           <button 
             type="button" 

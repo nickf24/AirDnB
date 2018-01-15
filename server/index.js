@@ -90,12 +90,12 @@ app.get('/logout', (req, res) => {
   res.status(200).end();
 })
 
-app.post('/registration', (req, res) => {
+app.post('/registration', (req, res, next) => {
   console.log('received request: ', req.body);
   db.registerUser(req, (error, result) => {
     if (error) {
-      console.error(error);
-      res.status(401).json(error);
+      console.error('the errors', error);
+      res.status(500).send({ msg: error });
     } else {
       req.login(result, (error) => {
         res.status(201).json(result);

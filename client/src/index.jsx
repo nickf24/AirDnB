@@ -11,6 +11,7 @@ import Registration from './components/Registration.jsx';
 import UserProfile from './components/UserProfile.jsx';
 import ListingForm from './components/ListingForm.jsx';
 import ConfirmView from './components/ConfirmView.jsx';
+import UserInfo from './components/UserInfo.jsx';
 
 class App extends React.Component {
 
@@ -20,7 +21,8 @@ class App extends React.Component {
       currentView: 'homeView',
       currentListing: null,
       isLoggedIn: false,
-      currentUser: null
+      currentUser: null,
+      errormsgs: []
     }
   }
 
@@ -75,13 +77,14 @@ class App extends React.Component {
       .then(response => {
         // console.log(response);
         app.setState({
-          currentView: 'homeView',
+          currentView: 'userinfoView',
           isLoggedIn: true
         })
       })
       .catch(error => {
-        console.log(error);
-      })
+        var response = error;
+        app.setState({errormsgs: error.response.data.msg});
+      });
   }
 
   handleHostListingClick() {
@@ -134,13 +137,15 @@ class App extends React.Component {
     } else if (this.state.currentView === 'loginView') {
       return <Login handleLoginSubmit={ this.handleLoginSubmit.bind(this) } />
     } else if (this.state.currentView === 'registrationView') {
-      return <Registration handleRegistrationSubmit={ this.handleRegistrationSubmit.bind(this) } />
+      return <Registration handleRegistrationSubmit={ this.handleRegistrationSubmit.bind(this) } errors={ this.state.errormsgs } />
     } else if (this.state.currentView === 'profileView') {
       return <UserProfile user={ this.state.currentUser } handleListingClick = {this.handleListingClick.bind(this)} redirect={ this.handleNavChange.bind(this)  } />
     } else if (this.state.currentView === 'listingFormView') {
       return <ListingForm handleFormSubmit = {this.handleFormSubmit.bind(this)} />
     } else if (this.state.currentView === 'confirmView') {
       return <ConfirmView handleProfClick = {this.handleProfileView.bind(this)}/>
+    } else if (this.state.currentView === 'userinfoView') {
+      return <UserInfo showProfile={ this.handleProfileView.bind(this) } />
     }
   }
 
