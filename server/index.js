@@ -95,7 +95,7 @@ app.post('/registration', (req, res) => {
   db.registerUser(req, (error, result) => {
     if (error) {
       console.error(error);
-      res.status(409).json(error);
+      res.status(401).json(error);
     } else {
       req.login(result, (error) => {
         res.status(201).json(result);
@@ -142,7 +142,6 @@ app.get('/profile', (req, res) => {
   if (!req.isAuthenticated()) {
     res.status(401).end();
   } else {
-
     db.getUserProfile(req.user, (error, result) => {
       if (error) {
         console.error(error);
