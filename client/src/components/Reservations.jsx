@@ -70,20 +70,20 @@ class Reservations extends React.Component {
   render() {
   	var clashMessage = null;
   	if (this.state.clash === true) {
-  	  clashMessage = <div> Sorry, these dates are unavailable </div>
+  	  clashMessage = <div className="alert alert-danger" role="alert"> Sorry, these dates are unavailable </div>
   	}
 
   	if (this.state.clash === 'nope') {
-  	  clashMessage = <div> Consider it done! </div>
+  	  clashMessage = <div className="alert alert-success text-center"> SUCCESFULLY BOOKED </div>
   	}
 
     if (this.state.clash === 'loggedOut') {
-      clashMessage = <div> You must be logged in to request a booking! </div>
+      clashMessage = <div className="alert alert-danger" role="alert">Please log in to request a booking!</div>
     }
 
     var ratings = null;
     if (this.props.listing.rating !== null) {
-      ratings = <span id="inlineBlock">{this.props.listing.rating.map((star, index) => <i key = {index} className="fa fa-star x3" id="starUpMargin" aria-hidden="true"></i>)} {this.props.listing.numberOfRatings}</span>
+      ratings = <span className="centerDiv" id="inlineBlock">Rating: {this.props.listing.rating.map((star, index) => <i key = {index} className="fa fa-star" id="starUpMargin" aria-hidden="true"></i>)} {this.props.listing.numberOfRatings}</span>
     }
 
   	return (
@@ -91,17 +91,15 @@ class Reservations extends React.Component {
 		<div className="card sticky-top zAxis">
 			 <div className="card-header">
 				<h4 className="text-center">${this.props.listing.price} USD</h4>
+        <br />
+        {ratings}
 			</div>
-			<br />
-
 			<div> {clashMessage} </div>
-		  	<div className="card-body">
-
-				<Calendar changeFn = {this.sendBookingRequest.bind(this)} />
-				<br />
+		  	<div className="card-body lowerDivSlightly">
+				  <Calendar changeFn = {this.sendBookingRequest.bind(this)} />
+        <hr></hr>
 				<button type="button" className="btn btn-danger btn-lg btn-block" onClick = {() => this.buttonClickFn(this.state.from, this.state.to)}>REQUEST A BOOKING</button>
 		  	</div>
-        {ratings}
 		</div>
 
 
