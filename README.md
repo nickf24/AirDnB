@@ -1,6 +1,6 @@
 # Project Name
 
-> An AirBnb Clone Completed in 1 Week
+> An AirBnb Clone 
 
 ## Team
 
@@ -28,11 +28,6 @@
 - Node 6.4.x
 - Redis 2.6.x
 - MongoDB
-<<<<<<< HEAD
-- Express
-=======
-- ExpressJS
->>>>>>> add to readMe
 
 ## Development
 
